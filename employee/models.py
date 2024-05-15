@@ -20,7 +20,7 @@ class User(models.Model):
     )
     address = models.CharField(max_length=200)
 
-    paticipated_project = models.ManyToManyField('Project', blank=True)
+    paticipated_project = models.ManyToManyField(Project, blank=True)
 
     def __str__(self):
         return self.name
