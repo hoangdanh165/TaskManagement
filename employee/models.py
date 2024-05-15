@@ -38,15 +38,15 @@ class Task(models.Model):
     name = models.CharField(max_length=300)
     due_date = models.DateTimeField()
     status = models.BooleanField(default=False)
-    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
-    belongs_to = models.ForeignKey(Project, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
+    belongs_to = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
 
     def __str__(self):
         return self.name
 
 
 class Invitation(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='invitations')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     invited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
     invited_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
     message = models.TextField(blank=True, null=True)
