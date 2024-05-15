@@ -2,5 +2,9 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def get_home(request):
-    return render(request, 'employee/employee.html')
+def registration(request):
+    return render(request, 'employee/register-page.html')
+
+
+def main_page(request):
+    return render(request, 'employee/employee-page.html')

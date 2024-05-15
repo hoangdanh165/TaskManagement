@@ -11,6 +11,13 @@ class User(models.Model):
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
     dob = models.DateField(max_length=20)
+
+    gender_selections = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    gender = models.CharField(max_length=1, choices=gender_selections)
+
     age = models.IntegerField(
         validators=[
             MinValueValidator(0),
