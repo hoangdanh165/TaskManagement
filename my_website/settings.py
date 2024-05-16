@@ -123,22 +123,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-<<<<<<< HEAD
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    BASE_DIR / "employee/static",
 ]
 
 
-=======
-# Where the static tag will look for static files
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-
->>>>>>> 09c60702f27f1ba96ec66d61a0885f43cd659a95
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
