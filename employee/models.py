@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from project.models import Project
 
+
 # Create your models here.
 class User(models.Model):
     username = models.CharField(max_length=100, primary_key=True)
@@ -31,26 +32,3 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Task(models.Model):
-    name = models.CharField(max_length=300)
-    due_date = models.DateTimeField()
-    status = models.BooleanField(default=False)
-    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
-    belongs_to = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
-
-    def __str__(self):
-        return self.name
-
-
-class Invitation(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    invited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
-    invited_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
-    message = models.TextField(blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    accepted = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'Invitation from {self.invited_by.name} to {self.invited_user.name} for project {self.project.name}'
