@@ -6,59 +6,55 @@
                 <h3 class="modal-title" id="exampleModalCenterTitle01">New Project</h3>
             </div>
             <div class="modal-body">
-                <form id="form-create-project" class="needs-validation" novalidate method="post" action="{% url 'create-project' %}">
+                <form id="form-create-project" class="" novalidate method="post" action="{% url 'create-project' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group mb-3">
-                                <label for="name" class="h5">Project Name*</label>
-                                <input type="text" class="form-control {% if errors.name %} {{errors.name}} {% endif %}" id="name" name="name"
-                                    placeholder="Project Name" required>
+                                <label for="{{ form.name.id_for_label }}" class="h5">Project Name*</label>
+                                {{ form.name }}
+                    
+                                {% if form.name.errors %}
+                                    {{ form.name.errors }}
+                                {% else %}
                                 <div class="invalid-feedback">
                                     Project name is required
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group mb-3">
-                                <label for="description" class="h5">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3" required>{{project.description}}</textarea>
+                                <label for="{{ form.description.id_for_label }}" class="h5">Description*</label>
+                                {{ form.description }}
+                                
+                                {% if form.description.errors %}
+                                    {{ form.description.errors }}
+                                {% else %}
                                 <div class="invalid-feedback">
                                     Description field is required
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
-                        <!-- <div class="col-lg-6">
-                            <div class="form-group mb-3">
-                                <label for="exampleInputText2" class="h5">Categories *</label>
-                                <select name="type" class="selectpicker form-control" data-style="py-0">
-                                    <option>Category</option>
-                                    <option>Android</option>
-                                    <option>IOS</option>
-                                    <option>Ui/Ux Design</option>
-                                    <option>Development</option>
-                                </select>
-                            </div>
-                        </div> -->
                         <div class="col-lg-12">
                             <div class="form-group mb-3">
-                                <label for="due_date_0" class="h5">Due Dates*</label>
+                                <label for="{{ form.due_date_0.id_for_label }}" class="h5">Due Dates*</label>
                                 <div class="d-flex gap-2">
-                                    <input type="date" class="form-control col-sm-8" id="due_date_0" name="due_date_0" required>
-                                    <input type="time" class="form-control col-sm-4" id="due_date_1" name="due_date_1" required>
+                                    {{ form.due_date_0 }}
+                                    {{ form.due_date_1 }}
                                 </div>
-                                <div class="invalid-feedback col-12 ps-0" id="due-date-invalid-feeback">
+                                
+                                {% if form.due_date_0.errors or form.due_date_1.errors %}
+                                    {{ form.due_date.errors }}
+                                {% else %}
+                                <div class="invalid-feedback col-12 ps-0" id="due-date-invalid-feeback"></div>
                                     Due date is required
                                 </div>
+                                {% endif %}
                                 
                             </div>
                         </div>
-                        <!-- <div class="col-lg-12">
-                            <div class="form-group mb-3">
-                                <label for="exampleInputText07" class="h5">Assign Members</label>
-                                <input type="text" class="form-control" id="exampleInputText07">
-                            </div>
-                        </div> -->
                         <div class="col-lg-12">
                             <div class="d-flex flex-wrap align-items-ceter justify-content-center mt-2">
                                 <button class="btn btn-primary mr-3" type="submit">Save</button>
@@ -73,8 +69,8 @@
 </div>
 
 <script>
-    date_input = document.getElementById('due_date_0');
-    time_input = document.getElementById('due_date_1');
+    date_input = document.getElementById('id_due_date_0');
+    time_input = document.getElementById('id_due_date_1');
 
     due_date_feedback = document.getElementById('due-date-invalid-feeback');
 
@@ -93,6 +89,10 @@
     });
 
     create_project_form.addEventListener('submit', (e) => {
+        if (!create_project_form.classList.contains('needs-validation')) {
+            return;
+        }
+
         if (create_project_form.checkValidity() === false) {
             e.preventDefault();
         }
@@ -110,4 +110,13 @@
             due_date_feedback.style.display = 'block';
         }
     }
+
+    // Auto open the modal if the form validation at server fails
+    openModalBtn = document.getElementById('open-create-project-modal');
+    setTimeout(() => {
+        if (openModalBtn) {
+            console.log('Auto opening modal');
+            openModalBtn.click();
+        }
+    }, 200);
 </script>

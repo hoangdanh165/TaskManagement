@@ -8,7 +8,8 @@ from .models import Project
 
 def projects(request):
     projects = Project.objects.all()
-    context = { 'projects': projects }    
+    form = ProjectForm()
+    context = { 'projects': projects, 'form': form }    
     return render(request, 'project/page-project.html', context)
 
 
@@ -32,4 +33,5 @@ def createProject(request):
         return redirect('projects')
     
     messages.error(request, 'Failed to create new project!')
-    return redirect('projects')
+    
+    return render(request, 'project/page-project.html', {'form': form})
