@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 from employee.models import User
-
 from .forms import ProjectForm
 from .models import Project
-from django.views.decorators.http import require_POST
 
 def projects(request):
     projects = Project.objects.all()
@@ -28,9 +28,8 @@ def createProject(request):
         # signed_in_user = request.user
         project.owner = User.objects.get(username='tienze')
         project.save()
-        print('Created project')
+        messages.success(request, 'Created project successfully!')
         return redirect('projects')
     
-    
-    print('Failed to create project', form.errors.items())
+    messages.error(request, 'Failed to create new project!')
     return redirect('projects')
