@@ -9,7 +9,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('employee', '0003_remove_project_owner'),
+        # ('employee', '0003_remove_project_owner'),
+        ('employee', '0001_initial')
     ]
 
     operations = [
