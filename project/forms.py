@@ -35,6 +35,13 @@ class ProjectForm(forms.ModelForm):
             }),
         }
 
+    # Set value for due_date_0 and due_date_1 fields if the instance is passed
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['due_date_0'].initial = self.instance.due_date.date()
+            self.fields['due_date_1'].initial = self.instance.due_date.time()
+            
     def clean_due_date(self):
         print('clean_due_date()', 30*'---')
         
