@@ -32,6 +32,6 @@ def createProject(request):
         messages.success(request, 'Created project successfully!')
         return redirect('projects')
     
+    print(form.errors)
     messages.error(request, 'Failed to create new project!')
-    
     return render(request, 'project/page-project.html', {'form': form})

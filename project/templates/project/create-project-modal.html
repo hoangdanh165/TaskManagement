@@ -6,8 +6,9 @@
                 <h3 class="modal-title" id="exampleModalCenterTitle01">New Project</h3>
             </div>
             <div class="modal-body">
-                <form id="form-create-project" class="" novalidate method="post" action="{% url 'create-project' %}">
+                <form id="form-create-project" class="needs-validation" novalidate method="post" action="{% url 'create-project' %}">
                     {% csrf_token %}
+                    {{ form.due_date }}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group mb-3">
@@ -45,10 +46,10 @@
                                     {{ form.due_date_1 }}
                                 </div>
                                 
-                                {% if form.due_date_0.errors or form.due_date_1.errors %}
+                                {% if form.due_date.errors %}
                                     {{ form.due_date.errors }}
                                 {% else %}
-                                <div class="invalid-feedback col-12 ps-0" id="due-date-invalid-feeback"></div>
+                                <div class="invalid-feedback col-12 ps-0" id="due-date-invalid-feeback">
                                     Due date is required
                                 </div>
                                 {% endif %}
@@ -111,6 +112,10 @@
         }
     }
 
+</script>
+
+{% if form.errors %}
+<script>
     // Auto open the modal if the form validation at server fails
     openModalBtn = document.getElementById('open-create-project-modal');
     setTimeout(() => {
@@ -120,3 +125,4 @@
         }
     }, 200);
 </script>
+{% endif %}
