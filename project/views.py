@@ -30,7 +30,6 @@ def get_stored_form(request, form_class):
     
     return None
     
-
 def projects(request):
     projects = Project.objects.all()
     form = get_stored_form_or_create_one(request, ProjectForm)
@@ -78,3 +77,13 @@ def updateProject(request, id):
     messages.error(request, 'Failed to update this project!')
     store_form(request, form)
     return redirect('project', id=id)
+
+@require_POST
+def deleteProject(request, id):
+    project = Project.objects.get(id=id)
+    project_name = project.name
+    
+    project.delete()
+    messages.success(request, 'Deleted project "%s" successfully!' % project_name)
+    
+    return redirect('projects')
