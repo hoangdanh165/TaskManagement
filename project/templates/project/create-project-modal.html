@@ -6,7 +6,7 @@
                 <h3 class="modal-title" id="exampleModalCenterTitle01">New Project</h3>
             </div>
             <div class="modal-body">
-                <form id="form-create-project" class="needs-validation" novalidate method="post" action="{% url 'create-project' %}">
+                <form id="form-create-project" class="" novalidate method="post" action="{% url 'create-project' %}">
                     {% csrf_token %}
                     {{ form.due_date }}
                     <div class="row">
@@ -123,6 +123,6 @@
             console.log('Auto opening modal');
             openModalBtn.click();
         }
-    }, 200);
+    }, 400);
 </script>
 {% endif %}

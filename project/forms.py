@@ -1,7 +1,5 @@
 from django import forms
 from .models import Project
-from django.core.exceptions import ValidationError
-import datetime
 
 class ProjectForm(forms.ModelForm):
     due_date_0 = forms.DateField(
@@ -37,20 +35,46 @@ class ProjectForm(forms.ModelForm):
             }),
         }
 
-    def clean(self):
-        print('clean()', 30*'---')
+    def clean_due_date(self):
+        print('clean_due_date()', 30*'---')
         
-        cleaned_data = super().clean()
-        due_date_0 = cleaned_data.get('due_date_0')
-        due_date_1 = cleaned_data.get('due_date_1')
+        due_date_0 = self.data.get('due_date_0')
+        due_date_1 = self.data.get('due_date_1')
 
-        if due_date_1 is None:
+        if not due_date_0:
             raise forms.ValidationError("The date field is required")
         
-        if due_date_0 is None:
+        if not due_date_1:
             raise forms.ValidationError("The time field is required")
         
-        cleaned_data['due_date'] = datetime.datetime.combine(due_date_0, due_date_1)
-        print(cleaned_data['due_date'], type(cleaned_data['due_date']))
+        due_date_value = ' '.join([due_date_0, due_date_1])
+        print(due_date_value, type(due_date_value))
         
-        return cleaned_data
+        return due_date_value
+    
+    # def clean(self):
+    #     print('clean()', 30*'--')
+        
+    #     cleaned_data = super().clean()
+    #     print(cleaned_data)
+    #     print(30*'--')
+    #     print(self.data)
+    #     print(30*'--')
+        
+    #     due_date_0 = cleaned_data.get('due_date_0')
+    #     due_date_1 = cleaned_data.get('due_date_1')
+        
+    #     print('due_date_0:', due_date_0)
+    #     print('due_date_1:', due_date_1)
+
+    #     if due_date_1 is None:
+    #         raise forms.ValidationError("The date field is required")
+        
+    #     if due_date_0 is None:
+    #         raise forms.ValidationError("The time field is required")
+        
+    #     cleaned_data['due_date'] = datetime.datetime.combine(due_date_0, due_date_1)
+        
+    #     print(cleaned_data['due_date'], type(cleaned_data['due_date']))
+        
+    #     return cleaned_data
