@@ -117,12 +117,12 @@
 {% if form.errors %}
 <script>
     // Auto open the modal if the form validation at server fails
-    openModalBtn = document.getElementById('open-create-project-modal');
-    setTimeout(() => {
+    document.addEventListener('DOMContentLoaded', function() {
+        openModalBtn = document.getElementById('open-create-project-modal');
         if (openModalBtn) {
             console.log('Auto opening modal');
             openModalBtn.click();
         }
-    }, 400);
+    });
 </script>
 {% endif %}
