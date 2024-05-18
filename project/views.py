@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
-from employee.models import User
 from .forms import ProjectForm
 from .models import Project
 
@@ -52,9 +51,7 @@ def createProject(request):
     
     if form.is_valid():
         project = form.save(commit=False)
-        # owner_id = request.POST.get('owner')
-        # signed_in_user = request.user
-        project.owner = User.objects.get(username='tienze')
+        project.owner = request.user
         project.save()
         messages.success(request, 'Created project successfully!')
         return redirect('projects')

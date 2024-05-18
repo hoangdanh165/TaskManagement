@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
-{% block main-content %}
-<h1>THIS IS EMPLOYEE PAGE</h1>
-{% endblock main-content %}
+{% block content %}
+    {% if messages %}
+        {% for m in messages %}
+            {{ m }}
+        {% endfor %}
+    {% endif %}
+<h1>{{ username }}</h1>
+{% endblock content %}

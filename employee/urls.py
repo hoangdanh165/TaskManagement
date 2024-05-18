@@ -3,6 +3,7 @@ from django.urls import path
 from employee import views
 
 urlpatterns = [
-    # path('sign_in', views.registration, name='sign_in')
-    path('registration', views.registration, name='registration')
+    path('registration', views.registration, name='registration'),
+    path('sign_in', views.sign_in, name='sign_in'),
+    path('employee_page', views.main, name='employee_page'),
 ]
