@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+
 {% load static %}
+{% load progress_filter %}
+{% load circle_class_type %}
 
 {% block content %}
 
@@ -75,10 +78,12 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-4">
+                            {% with progress=project|progress %}
                             <div id="circle-progress-{{project.id}}"
-                                class="circle-progress circle-progress circle-progress-primary"
-                                data-min-value="0" data-max-value="100" data-value="25" data-type="percent">
+                                class="circle-progress circle-progress circle-progress-{{progress|circle_class_type}}"
+                                data-min-value="0" data-max-value="100" data-value="{{progress}}" data-type="percent">
                             </div>
+                            {% endwith %}
                             <i class="ri-star-fill m-0 text-warning"></i>
                         </div>
                         <a href="{% url 'project' project.id %}" style="text-decoration: none; color: #140F49;">
@@ -102,89 +107,6 @@
                 </div>
             </div>
             {% endfor %}
-
-
-            <div class="col-lg-4 col-md-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div id="circle-progress-02" class="circle-progress circle-progress-secondary" data-min-value="0" data-max-value="100" data-value="35" data-type="percent"></div>
-                            <i class="ri-star-fill m-0 text-warning"></i>
-                        </div>
-                        <h5 class="mb-1">Vuetify Dashboard in Admin</h5>
-                        <p class="mb-3">Start development server and check Vue project in browser.</p>
-                        <div class="d-flex align-items-center justify-content-between pt-3 border-top">
-                            <div class="iq-media-group">
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/07.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/02.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/04.jpg" alt="">
-                                </a>                                                
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/08.jpg" alt="">
-                                </a>
-                            </div>
-                            <a class="btn btn-white text-secondary link-shadow">Medium</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div id="circle-progress-03" class="circle-progress circle-progress-warning" data-min-value="0" data-max-value="100" data-value="15" data-type="percent"></div>
-                            <i class="ri-star-fill m-0 text-warning"></i>
-                        </div>
-                        <h5 class="mb-1">Wordpress Dashboard Plugins</h5>
-                        <p class="mb-3">Customize your WordPress with smart WordPress plugins.</p>
-                        <div class="d-flex align-items-center justify-content-between pt-3 border-top">
-                            <div class="iq-media-group">
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/01.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/02.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/03.jpg" alt="">
-                                </a>
-                            </div>
-                            <a class="btn btn-white text-warning link-shadow">Low</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card card-block card-stretch card-height">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div id="circle-progress-04" class="circle-progress circle-progress-success" data-min-value="0" data-max-value="100" data-value="40" data-type="percent"></div>
-                            <i class="ri-star-fill m-0 text-warning"></i>
-                        </div>
-                        <h5 class="mb-1">Hotel Management App</h5>
-                        <p class="mb-3">Build a Cloud-based Hotel Management Theme.</p>
-                        <div class="d-flex align-items-center justify-content-between pt-3 border-top">
-                            <div class="iq-media-group">
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/05.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/06.jpg" alt="">
-                                </a>
-                                <a href="#" class="iq-media">
-                                    <img class="img-fluid avatar-40 rounded-circle" src="../assets/images/user/07.jpg" alt="">
-                                </a>
-                            </div>
-                            <a class="btn btn-white text-success link-shadow">High</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div id="list" class="item-content animate__animated animate__fadeIn" data-toggle-extra="tab-content">
