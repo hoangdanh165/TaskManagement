@@ -47,7 +47,7 @@
                                                     
                                                 <label class="custom-control-label"
                                                     for="customCheck{{task.id}}"></label>
-                                                {% if task.status %} 
+                                                {% if task.completed %} 
                                                 <script>
                                                     document.addEventListener('DOMContentLoaded', function(){
                                                         var label = document.querySelector('label[for="customCheck{{task.id}}"]');
@@ -76,7 +76,7 @@
                             </div>
 
                             <!-- Toggle form -->
-                            <form id="update-task-form-{{task.id}}" method="post" action="">
+                            <form id="update-task-form-{{task.id}}" method="post" action="{% url 'update-task' task.id %}">
                                 {% csrf_token %}
                             </form>
 
@@ -90,14 +90,14 @@
                                                 <input name="completed" type="checkbox" class="custom-control-input" 
                                                     id="completed-input-{{task.id}}" form="update-task-form-{{task.id}}">
                                                 <label class="custom-control-label h5" for="completed-input-{{task.id}}">
-                                                    {% if task.status %}
+                                                    {% if task.completed %}
                                                         Completed
                                                     {% else %}
                                                         Mark as undone
                                                     {% endif %}
                                                 </label>
                                                 <!-- Fill the checkbox -->
-                                                {% if task.status %}
+                                                {% if task.completed %}
                                                 <script>
                                                     document.addEventListener('DOMContentLoaded', function(){
                                                         let label = document.querySelector('label[for="completed-input-{{task.id}}"]');
