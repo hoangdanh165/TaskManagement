@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .forms import ProjectForm
 from .models import Project
@@ -30,9 +31,22 @@ def get_stored_form(request, form_class):
     return None
     
 def projects(request):
-    projects = Project.objects.all()
+    search_query = request.GET.get('search', '')
+    projects_list = Project.objects.filter(name__icontains=search_query)
+    paginator = Paginator(projects_list, 6) # Show 10 projects per page.
+
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    
+    view_option = request.GET.get('view_option', 'grid')
+
     form = get_stored_form_or_create_one(request, ProjectForm)
-    context = { 'projects': projects, 'form': form }    
+    context = { 
+        'page': page, 
+        'form': form, 
+        'search_query': search_query,
+        'view_option': view_option,
+    }    
     return render(request, 'project/page-project.html', context)
 
 
