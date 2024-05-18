@@ -70,6 +70,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Display in grid view -->
     <div id="grid" class="item-content animate__animated animate__fadeIn active"
         data-toggle-extra="tab-content">
         <div class="row">
@@ -109,23 +111,28 @@
             {% endfor %}
         </div>
     </div>
+
+    <!-- Display in list view -->
     <div id="list" class="item-content animate__animated animate__fadeIn" data-toggle-extra="tab-content">
         <div class="row">
+            {% for project in projects %}
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="d-flex align-items-center">
-                                    <div id="circle-progress-13"
-                                        class="circle-progress-01 circle-progress circle-progress-primary"
-                                        data-min-value="0" data-max-value="100" data-value="25"
+                                    {% with progress=project|progress %}
+                                    <div id="circle-progress-list-{{project.id}}"
+                                        class="circle-progress-01 circle-progress circle-progress-{{progress|circle_class_type}}"
+                                        data-min-value="0" data-max-value="100" data-value="{{progress}}"
                                         data-type="percent"></div>
-                                    <div class="ml-3">
-                                        <h5 class="mb-1">Theme development</h5>
-                                        <p class="mb-0">Preparing framework of block-based WordPress Theme.
-                                        </p>
-                                    </div>
+                                    {% endwith %}
+                                    
+                                    <a href="{% url 'project' project.id %}" class="ml-3" style="text-decoration: none; color: #140F49;">
+                                        <h5 class="mb-1">{{project.name}}</h5>
+                                        <p class="mb-0">{{project.description|truncatechars:50}}</p>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-sm-4 text-sm-right mt-3 mt-sm-0">
@@ -145,6 +152,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
     <!-- Page end  -->
