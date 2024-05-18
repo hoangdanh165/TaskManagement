@@ -20,6 +20,20 @@ def tasks(request, project_id):
     return render(request, 'task/page-task.html', context)
 
 @require_POST
+def createTask(request, project_id):
+    form = TaskForm(request.POST)
+    
+    if form.is_valid():
+        task = form.save(commit=False)
+        task.belongs_to = Project.objects.get(id=project_id)
+        task.save()
+        messages.success(request, 'Created new Task successfully!')
+        return redirect('tasks', task.belongs_to.id)
+        
+    messages.error(request, 'Failed to create new Task!')
+    return redirect('tasks', task.belongs_to.id)
+
+@require_POST
 def updateTask(request, id):
     task = Task.objects.get(id=id)
     form = TaskForm(request.POST, instance=task)
