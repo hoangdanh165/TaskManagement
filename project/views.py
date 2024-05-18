@@ -43,7 +43,7 @@ def project(request, id):
     if form is None:
         form = ProjectForm(instance=project)
     
-    context = { 'project': project, 'form': form }
+    context = { 'project': project, 'form': form, 'actived_page': 'details' }
     return render(request, 'project/single-project.html', context)
 
 @require_POST
