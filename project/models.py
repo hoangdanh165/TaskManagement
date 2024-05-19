@@ -7,6 +7,7 @@ class Project(models.Model):
     owner = models.ForeignKey('employee.User', on_delete=models.CASCADE, related_name='owned_projects')
     due_date = models.DateTimeField()
     created_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='project-images/', null=True, blank=True, default='project-images/default.jpg')
     
     def __str__(self):
         return self.name

@@ -4,29 +4,41 @@
 {% block content %}
 
 <div class="container-fluid">
-    <!-- Top nav-->
-    <ul class="nav nav-pills mb-3 nav-fill card flex-row {{actived_page}}" id="pills-tab-1" role="tablist">
-        <li class="nav-item" style="flex-basis: 0px;">
-            <a class="nav-link {% if actived_page == 'details' %} active {% endif %}" id="pills-home-tab-fill" href="{% url 'project' project.id %}" role="tab"
-                aria-controls="pills-home" aria-selected="true">Details</a>
-        </li>
-        <li class="nav-item" style="flex-basis: 0px;">
-            <a class="nav-link {% if actived_page == 'tasks' %} active {% endif %}" id="pills-contact-tab-fill" href="{% url 'tasks' project.id %}" role="tab"
-                aria-controls="pills-contact" aria-selected="false">Tasks</a>
-        </li>
-        <li class="nav-item" style="flex-basis: 0px;">
-            <a class="nav-link {% if actived_page == 'participated employees' %} active {% endif %}" id="pills-profile-tab-fill" href="#pills-profile-fill" role="tab"
-                aria-controls="pills-profile" aria-selected="false">Participated Employees</a>
-        </li>
-    </ul>
-    <!-- Top nav end-->
-    
-    <!-- Alert messages -->
-    {% include 'alert-message.html' %}
+    <div class="card car-transparent" style="margin-bottom: -110px;">
+        <div class="card-body p-0">
+            <div class="profile-image position-relative" style="max-height: 500px; overflow: hidden;">
+                <img src="{{project.image.url}}" class="img-fluid rounded w-100" alt="project-image"
+                    >
+            </div>
+        </div>
+    </div>
 
-    <!-- Main content -->
-    {% block content_of_project_layout %}
-    {% endblock content_of_project_layout %}
+    <!-- Top nav-->
+    <div class="px-4">
+        <ul class="nav nav-pills mb-3 nav-fill card flex-row {{actived_page}}" id="pills-tab-1" role="tablist" 
+                style="background-color: rgba(255,255,255,0.9); border: none;">
+            <li class="nav-item" style="flex-basis: 0px;">
+                <a class="nav-link {% if actived_page == 'details' %} active {% endif %}" id="pills-home-tab-fill" href="{% url 'project' project.id %}" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Details</a>
+            </li>
+            <li class="nav-item" style="flex-basis: 0px;">
+                <a class="nav-link {% if actived_page == 'tasks' %} active {% endif %}" id="pills-contact-tab-fill" href="{% url 'tasks' project.id %}" role="tab"
+                    aria-controls="pills-contact" aria-selected="false">Tasks</a>
+            </li>
+            <li class="nav-item" style="flex-basis: 0px;">
+                <a class="nav-link {% if actived_page == 'participated employees' %} active {% endif %}" id="pills-profile-tab-fill" href="#pills-profile-fill" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">Participated Employees</a>
+            </li>
+        </ul>
+        <!-- Top nav end-->
+        
+        <!-- Alert messages -->
+        {% include 'alert-message.html' %}
+    
+        <!-- Main content -->
+        {% block content_of_project_layout %}
+        {% endblock content_of_project_layout %}
+    </div>
 </div>
 
 
