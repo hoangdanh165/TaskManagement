@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% load task_progress_on_project %}
+{% load task_progress_class %}
+
+{% block css %}
+<style>
+    .table.tble-min-width td {
+        min-width: 200px;
+    }
+
+    .table.tble-min-width tr td:first-child {
+        min-width: 300px;
+    }
+    .table.tble-min-width tr td:last-child {
+        min-width: 100px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between breadcrumb-content">
+                        <h5>Project <i class="las la-clipboard-list mr-3"></i><span class="h6">{{project_name}}</span></h5>
+                        
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <!-- <div class="dropdown status-dropdown mr-3">
+                                <div class="dropdown-toggle" id="dropdownMenuButton03" data-toggle="dropdown">
+                                    <div class="btn bg-body"><span class="h6">Status :</span> In Progress<i
+                                            class="ri-arrow-down-s-line ml-2 mr-0"></i></div>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton03">
+                                    <a class="dropdown-item" href="#"><i class="ri-mic-line mr-2"></i>In
+                                        Progress</a>
+                                    <a class="dropdown-item" href="#"><i
+                                            class="ri-attachment-line mr-2"></i>Priority</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-copy-line mr-2"></i>Category</a>
+                                </div>
+                            </div> -->
+                            <div class="list-grid-toggle d-flex align-items-center mr-3">
+                                <!-- Grid option button -->
+                                <div data-toggle-extra="tab" data-target-extra="#grid" class="{% if actived_view == 'tasks' %} active {% endif %}">
+                                    <div class="grid-icon mr-3">
+                                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="7" height="7"></rect>
+                                            <rect x="14" y="3" width="7" height="7"></rect>
+                                            <rect x="14" y="14" width="7" height="7"></rect>
+                                            <rect x="3" y="14" width="7" height="7"></rect>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- List option button -->
+                                <a href="{% url 'your-tasks' %}" style="color: inherit;" data-toggle-extra="tab" data-target-extra="#list" class="{% if actived_view == 'projects' %} active {% endif %}">
+                                    <div class="grid-icon">
+                                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="21" y1="10" x2="3" y2="10"></line>
+                                            <line x1="21" y1="6" x2="3" y2="6"></line>
+                                            <line x1="21" y1="14" x2="3" y2="14"></line>
+                                            <line x1="21" y1="18" x2="3" y2="18"></line>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if actived_view == 'tasks' %}
+    <!-- View grid option -->
+    <div id="grid" class="item-content animate__animated animate__fadeIn active" data-toggle-extra="tab-content">
+        <div class="row">
+            <!-- In progress tasks column -->
+            <div class="col-lg-6">
+                <div class="card-transparent mb-0 desk-info">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h5>In Progress ( {{num_in_progress_tasks}} Task{{ num_in_progress_tasks|pluralize }} )</h5>
+                                            <div class="dropdown">
+                                                <span class="dropdown-toggle py-2" id="dropdownMenuButton05"
+                                                    data-toggle="dropdown">
+                                                    <i class="ri-more-fill"></i>
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="dropdownMenuButton05">
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-file-copy-2-line mr-2"></i>Duplicate</a>
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-edit-2-line mr-2"></i>Rename</a>
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-delete-bin-5-line mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                {% for task in in_progress_tasks %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mb-3">{{task.name}}</h5>
+                                        <p class="mb-3"><i class="las la-calendar-check mr-2"></i>{{task.due_date}}</p>
+                                        <p class="mb-3">{{task.description}}</p>
+
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="iq-media-group">
+                                                <a href="#" class="iq-media">
+                                                    <img src="../assets/images/user/03.jpg"
+                                                        class="img-fluid avatar-40 rounded-circle" alt="">
+                                                </a>
+                                                <a href="#" class="iq-media">
+                                                    <img src="../assets/images/user/04.jpg"
+                                                        class="img-fluid avatar-40 rounded-circle" alt="">
+                                                </a>
+                                                <a href="#" class="iq-media">
+                                                    <img src="../assets/images/user/05.jpg"
+                                                        class="img-fluid avatar-40 rounded-circle" alt="">
+                                                </a>
+                                                <a href="#" class="iq-media">
+                                                    <img src="../assets/images/user/06.jpg"
+                                                        class="img-fluid avatar-40 rounded-circle" alt="">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="btn bg-success-light">SEO</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In completed tasks column -->
+            <div class="col-lg-6">
+                <div class="card-transparent mb-0 desk-info">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h5>Completed ( {{num_completed_tasks}} Task{{num_completed_tasks|pluralize}} )</h5>
+                                            <div class="dropdown">
+                                                <span class="dropdown-toggle py-2" id="dropdownMenuButton06"
+                                                    data-toggle="dropdown">
+                                                    <i class="ri-more-fill"></i>
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="dropdownMenuButton06">
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-file-copy-2-line mr-2"></i>Duplicate</a>
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-edit-2-line mr-2"></i>Rename</a>
+                                                    <a class="dropdown-item" href="#"><i
+                                                            class="ri-delete-bin-5-line mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                {% for task in completed_tasks %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mb-3">{{task.name}}</h5>
+                                        <p class="mb-3"><i class="las la-calendar-check mr-2"></i>{{task.due_date}}</p>
+                                        <p class="mb-3">{{task.description}}</p>
+                                        
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="iq-media-group">
+                                                <a href="#" class="iq-media">
+                                                    <img src="../assets/images/user/01.jpg"
+                                                        class="img-fluid avatar-40 rounded-circle" alt="">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="btn bg-secondary-light">Design</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- View list option -->
+    <div id="list" class="item-content animate__animated animate__fadeIn active" data-toggle-extra="tab-content">
+        <div class="table-responsive rounded bg-white mb-4">
+            <table class="table mb-0 table-borderless tbl-server-info tble-min-width">
+                <tbody>
+                    {% for project in participated_projects %}
+                    
+                    <tr>
+                        <td><a href="{% url 'project' project.id %}" style="color: inherit;">{{project.name}}</a></td>
+                        <td class="w-25">
+                            {% with task_progress=project|task_progress_percentage:request.user %}
+                            <div class="iq-progress-bar bg-{{task_progress|task_progress_class}}-light">
+                                <span class="bg-{{task_progress|task_progress_class}} iq-progress progress-1" data-percent="{{task_progress}}"></span>
+                            </div>
+                            {% endwith %}
+                        </td>
+                        <td>
+                            <p class="mb-0"><i class="las la-tasks mr-2"></i>{{project|task_progress_text:request.user}}</p>
+                        </td>
+                        <td>
+                            <p class="mb-0"><i class="las la-calendar-check mr-2"></i>{{project.due_date|date}}</p>
+                        </td>
+                        <!-- <td>
+                            <a href="#" class="btn bg-secondary-light">Design</a>
+                        </td> -->
+                        <td>
+                            <a href="{% url 'your-tasks' %}?project_id={{project.id}}">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}
