@@ -89,3 +89,6 @@ local_settings.py
 db.sqlite3
 
 .vscode
+
+/static/media/project-images/*
+!/static/media/project-images/default.jpg
