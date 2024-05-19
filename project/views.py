@@ -61,7 +61,7 @@ def project(request, id):
 
 @require_POST
 def createProject(request):
-    form = ProjectForm(request.POST)
+    form = ProjectForm(request.POST, request.FILES)
     
     if form.is_valid():
         project = form.save(commit=False)
@@ -78,7 +78,7 @@ def createProject(request):
 @require_POST
 def updateProject(request, id):
     project = Project.objects.get(id=id)
-    form = ProjectForm(request.POST, instance=project)
+    form = ProjectForm(request.POST, request.FILES, instance=project)
     
     if form.is_valid():
         form.save()
