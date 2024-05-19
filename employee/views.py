@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm, ProfileUpdateForm, PasswordUpdateForm
 from django.contrib.auth.decorators import login_required
@@ -21,6 +22,11 @@ def registration(request):
 
 
 def sign_in(request):
+    if request.user.is_authenticated:
+        user = request.user
+        name = user.name
+        return render(request, 'employee/dashboard.html', {'name': name})
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -29,7 +35,7 @@ def sign_in(request):
         if user is not None:
             login(request, user)
             name = user.name
-            return render(request, 'employee/employee-page.html', {'name': name})
+            return render(request, 'employee/dashboard.html', {'name': name})
         else:
             error_message = "Invalid username or password."
             messages.error(request, error_message)
@@ -38,6 +44,7 @@ def sign_in(request):
     return render(request, 'employee/login-page.html')
 
 
+@login_required
 def sign_out(request):
     logout(request)
     return redirect('sign_in')
@@ -72,5 +79,10 @@ def change_password(request):
         return redirect('view_user_profile')
     else:
         return render(request, 'employee/edit-user-profile.html')
-def main(request):
-    return render(request, 'employee/employee-page.html')
+
+
+@login_required()
+def dashboard(request):
+    title = "Dashboard"
+    if request.user.is_authenticated:
+        return render(request, 'employee/dashboard.html', {'name': request.user.name, 'title': title})

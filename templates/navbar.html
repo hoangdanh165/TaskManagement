@@ -2,9 +2,9 @@
 
 <div class="iq-sidebar  sidebar-default ">
     <div class="iq-sidebar-logo d-flex align-items-center">
-        <a href="../backend/index.html" class="header-logo">
+        <a href="{% url 'dashboard' %}" class="header-logo">
             <img src="{% static 'images/logo.svg' %}" alt="logo">
-            <h3 class="logo-title light-logo">Webkit</h3>
+            <h3 class="logo-title light-logo">Chello</h3>
         </a>
         <div class="iq-menu-bt-sidebar ml-0">
             <i class="las la-bars wrapper-menu"></i>
@@ -14,14 +14,14 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
                 <li class="">
-                    <a href="../backend/index.html" class="svg-icon">
+                    <a href="{% url 'dashboard' %}" class="svg-icon">
                         <svg class="svg-icon" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
-                        <span class="ml-4">Dashboards</span>
+                        <span class="ml-4">{{ title }}</span>
                     </a>
                 </li>
                 <li class="active">
@@ -120,7 +120,7 @@
         <nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                 <i class="ri-menu-line wrapper-menu"></i>
-                <a href="../backend/index.html" class="header-logo">
+                <a href="{% url 'dashboard' %}" class="header-logo">
                     <h4 class="logo-title text-uppercase">Webkit</h4>
 
                 </a>
@@ -342,7 +342,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <a href="../app/user-profile.html">My Profile</a>
+                                    <a href="#">My Profile</a>
                                 </li>
                                 <li class="dropdown-item d-flex svg-icon">
                                     <svg class="svg-icon mr-0 text-primary" id="h-02-p" width="20"
