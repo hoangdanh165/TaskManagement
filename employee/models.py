@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     address = models.CharField(max_length=200)
 
-    participated_projects = models.ManyToManyField('project.Project', blank=True)
+    participated_projects = models.ManyToManyField('project.Project', blank=True, related_name='participants')
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)

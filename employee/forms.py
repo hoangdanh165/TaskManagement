@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
+
 from .models import User
 
 from django import forms
@@ -11,7 +13,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'password', 'dob', 'age', 'gender', 'address']
+        fields = ['username', 'email', 'name', 'password', 'dob', 'age', 'gender', 'address', 'phone']
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -32,5 +34,17 @@ class LoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
+        model = User
+        fields = ['username', 'password']
+
+
+class ProfileUpdateForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = User
+        fields = ['username', 'name', 'phone', 'dob', 'gender', 'age', 'address']
+
+
+class PasswordUpdateForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
         model = User
         fields = ['username', 'password']
