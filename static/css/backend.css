@@ -3117,7 +3117,8 @@ textarea.form-control {
   border-bottom-left-radius: 15px; }
 
 .card-deck .card {
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  }
 
 @media (min-width: 576px) {
   .card-deck {

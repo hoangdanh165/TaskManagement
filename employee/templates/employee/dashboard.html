@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
-<link rel="shortcut icon" href="{% static 'images/favicon.ico"/>
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
 <link rel="stylesheet" href="{% static 'css/backend-plugin.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/backend.css' %}?v=1.0.0">
+<link rel="stylesheet" href="{% static 'css/backend.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/remixicon/fonts/remixicon.css' %}">
 
@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="{% static 'vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css' %}">
 {% endblock css %}
 {% block content %}
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-8">
@@ -186,7 +185,7 @@
             <div class="card-transparent mb-0">
                 <div class="card-header d-flex align-items-center justify-content-between p-0 pb-3">
                     <div class="header-title">
-                        <h4 class="card-title">Current Projects</h4>
+                        <h4 class="card-title">Participated Projects</h4>
                     </div>
                     <div class="card-header-toolbar d-flex align-items-center">
                         <div id="top-project-slick-arrow" class="slick-aerrow-block">
@@ -195,11 +194,12 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-unstyled row top-projects mb-0">
+                        {% for project in projects %}
                         <li class="col-lg-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="mb-3">Hotel Management App UI Kit</h5>
-                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>02 / 02 / 2021</p>
+                                    <h5 class="mb-3">{{ project.name }}</h5>
+                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>{{ project.due_date }}</p>
                                     <div class="iq-progress-bar bg-secondary-light mb-4">
                                                 <span class="bg-secondary iq-progress progress-1" data-percent="65"
                                                       style="transition: width 2s ease 0s; width: 65%;"></span>
@@ -230,152 +230,12 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="col-lg-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="mb-3">General Improvement in pages</h5>
-                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>02 / 02 / 2021</p>
-                                    <div class="iq-progress-bar bg-info-light mb-4">
-                                                <span class="bg-info iq-progress progress-1" data-percent="65"
-                                                      style="transition: width 2s ease 0s; width: 65%;"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="iq-media-group">
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/05.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/06.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/07.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/08.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn bg-info-light">Testing</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="col-lg-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="mb-3">Product list view changes</h5>
-                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>02 / 02 / 2021</p>
-                                    <div class="iq-progress-bar bg-success-light mb-4">
-                                                <span class="bg-success iq-progress progress-1" data-percent="65"
-                                                      style="transition: width 2s ease 0s; width: 65%;"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="iq-media-group">
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/03.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/04.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/05.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/06.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn bg-success-light">SEO</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="col-lg-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="mb-3">Add Multiple theme options</h5>
-                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>02 / 02 / 2021</p>
-                                    <div class="iq-progress-bar bg-warning-light mb-4">
-                                                <span class="bg-warning iq-progress progress-1" data-percent="65"
-                                                      style="transition: width 2s ease 0s; width: 65%;"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="iq-media-group">
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/01.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/02.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/03.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/04.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn bg-warning-light">Development</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="col-lg-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="mb-3">Admin Panel Customization</h5>
-                                    <p class="mb-3"><i class="las la-calendar-check mr-2"></i>02 / 02 / 2021</p>
-                                    <div class="iq-progress-bar bg-primary-light mb-4">
-                                                <span class="bg-primary iq-progress progress-1"
-                                                      data-percent="65"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="iq-media-group">
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/01.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/02.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/03.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/04.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn bg-primary-light">Content</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Page end  -->
 </div>
 {% endblock content %}
 
@@ -649,13 +509,3 @@
         </div>
     </div>
 </div>
-
-{% block script %}
-<script src="{% static 'js/backend-bundle.min.js' %}"></script>
-<script src="{% static 'js/table-treeview.js' %}"></script>
-<script src="{% static 'js/customizer.js' %}"></script>
-<script async src="{% static 'js/chart-custom.js' %}"></script>
-<script async src="{% static 'js/slider.js' %}"></script>
-<script src="{% static 'js/app.js' %}"></script>
-<script src="{% static 'vendor/moment.min.js' %}"></script>
-{% endblock script %}
