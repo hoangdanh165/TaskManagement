@@ -136,7 +136,7 @@
                                                                 name="assigned_to" class="selectpicker form-control"
                                                                 data-style="py-0" tabindex="null" form="update-task-form-{{task.id}}" required>
                                                                 <!-- <option>Memebers</option> -->
-                                                                {% with participated_employee=project.user_set.all %}
+                                                                {% with participated_employee=project.participants.all %}
                                                                     {% with asigned_to_employee=task.assigned_to %}
                                                                         {% for employee in participated_employee %}
                                                                             <option value="{{employee.username}}" 
@@ -170,7 +170,7 @@
                                     <!-- End Member and due date -->
 
                                     <!-- Description -->
-                                    <div class="card mb-3">
+                                    <div class="card mb-0">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group">
