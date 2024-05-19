@@ -68,53 +68,53 @@
                                     </div>
                                     <div class=" row align-items-center">
                                         <div class="form-group col-sm-6">
-                                            <label>Name:</label>
-                                            <input type="text" class="form-control" name="name" value="{{ user.name }}">
+                                            <label for="name">Name:</label>
+                                            <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}">
                                             <p class="error">{{ form.name.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label>Age:</label>
-                                            <input type="number" class="form-control" name="age" value="{{ user.age }}">
+                                            <label for="age">Age:</label>
+                                            <input type="number" class="form-control" id="age" name="age" value="{{ user.age }}">
                                             <p class="error">{{ form.age.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label>User Name:</label>
-                                            <input type="text" class="form-control" name="username"
+                                            <label for="username">User Name:</label>
+                                            <input type="text" class="form-control" id="username" name="username"
                                                    value="{{ user.username }}">
                                             <p class="error">{{ form.username.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label>Phone:</label>
-                                            <input type="text" class="form-control" name="phone"
+                                            <label for="phone">Phone:</label>
+                                            <input type="text" class="form-control" id="phone" name="phone"
                                                    value="{{ user.phone }}">
                                             <p class="error">{{ form.phone.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label class="d-block">Gender:</label>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio6" name="gender"
+                                                <input type="radio" id="customRadio8" name="gender"
                                                        class="custom-control-input"
                                                        {% if user.gender == "M" %}checked{% endif %}>
-                                                <label class="custom-control-label">
+                                                <label class="custom-control-label" for="customRadio8">
                                                     Male </label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio7" name="gender"
+                                                <input type="radio" id="customRadio9" name="gender"
                                                        class="custom-control-input"
                                                        {% if user.gender == "F" %}checked{% endif %}>
-                                                <label class="custom-control-label">
+                                                <label class="custom-control-label" for="customRadio9">
                                                     Female </label>
                                                 <p class="error">{{ form.gender.errors }}</p>
                                             </div>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="dob">Date Of Birth:</label>
-                                            <input class="form-control" name="dob" value="{{ user.dob }}">
+                                            <input class="form-control" id="dob" name="dob" value="{{ user.dob }}">
                                             <p class="error">{{ form.dob.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-12">
-                                            <label>Address:</label>
-                                            <input type="text" class="form-control" name="address"
+                                            <label for="address">Address:</label>
+                                            <input type="text" class="form-control" id="address" name="address"
                                                    value="{{ user.address }}">
                                             <p class="error">{{ form.address.errors }}</p>
                                         </div>
@@ -136,17 +136,16 @@
                                 <form action="{% url 'change_password' %}" method="POST">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="cpass">Current Password:</label>
-                                        <a href="#" class="float-right">Forgot Password</a>
-                                        <input type="Password" class="form-control" name="password">
+                                        <label for="password">Current Password:</label>
+                                        <input type="Password" class="form-control" id="password" name="password">
                                     </div>
                                     <div class="form-group">
-                                        <label>New Password:</label>
-                                        <input type="Password" class="form-control" name="new_password">
+                                        <label for="new_password">New Password:</label>
+                                        <input type="Password" class="form-control" id="new_password" name="new_password">
                                     </div>
                                     <div class="form-group">
-                                        <label>Verify Password:</label>
-                                        <input type="Password" class="form-control" name="confirm_password">
+                                        <label for="confirm_password">Confirm Password:</label>
+                                        <input type="Password" class="form-control" id="confirm_password" name="confirm_password">
                                     </div>
                                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                     <button type="reset" class="btn iq-bg-danger">Cancel</button>
@@ -459,22 +458,6 @@
         </div>
     </div>
 </div>
-<footer class="iq-footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><a href="../backend/privacy-policy.html">Privacy Policy</a></li>
-                    <li class="list-inline-item"><a href="../backend/terms-of-service.html">Terms of Use</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-6 text-right">
-                <span class="mr-1"><script>document.write(new Date().getFullYear())</script>©</span> <a href="#"
-                                                                                                        class="">Webkit</a>.
-            </div>
-        </div>
-    </div>
-</footer>
 {% block script %}
 <script src="{%static 'js/backend-bundle.min.js' %}"></script>
 <script src="{%static 'js/table-treeview.js' %}"></script>
