@@ -51,7 +51,8 @@ def projects(request):
     view_option = request.GET.get('view_option', 'grid')
 
     form = get_stored_form_or_create_one(request, ProjectForm)
-    context = { 
+    context = {
+        'title': 'Projects',
         'page': page, 
         'form': form,
         'filter_by': filter_by,
@@ -67,7 +68,12 @@ def project(request, id):
     if form is None:
         form = ProjectForm(instance=project)
     
-    context = { 'project': project, 'form': form, 'actived_page': 'details' }
+    context = {
+        'title': 'Projects',
+        'project': project,
+        'form': form,
+        'actived_page': 'details'
+    }
     return render(request, 'project/single-project.html', context)
 
 @require_POST
