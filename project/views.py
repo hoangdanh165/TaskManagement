@@ -31,9 +31,19 @@ def get_stored_form(request, form_class):
     return None
     
 def projects(request):
+    filter_by = request.GET.get('filter_by', 'all')
+    if filter_by == 'participated':
+        projects_list = request.user.participated_projects.all()
+    elif filter_by == 'mine':
+        projects_list = request.user.owned_projects.all()
+    else:
+        projects_list = Project.objects.all()
+    
+    # Continue filtering by search query
     search_query = request.GET.get('search', '')
-    projects_list = Project.objects.filter(name__icontains=search_query)
-    paginator = Paginator(projects_list, 6) # Show 10 projects per page.
+    projects_list = projects_list.filter(name__icontains=search_query)
+    
+    paginator = Paginator(projects_list, 6)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -41,9 +51,11 @@ def projects(request):
     view_option = request.GET.get('view_option', 'grid')
 
     form = get_stored_form_or_create_one(request, ProjectForm)
-    context = { 
+    context = {
+        'title': 'Projects',
         'page': page, 
-        'form': form, 
+        'form': form,
+        'filter_by': filter_by,
         'search_query': search_query,
         'view_option': view_option,
     }    
@@ -56,7 +68,12 @@ def project(request, id):
     if form is None:
         form = ProjectForm(instance=project)
     
-    context = { 'project': project, 'form': form, 'actived_page': 'details' }
+    context = {
+        'title': 'Projects',
+        'project': project,
+        'form': form,
+        'actived_page': 'details'
+    }
     return render(request, 'project/single-project.html', context)
 
 @require_POST
