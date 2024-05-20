@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% load progress_filter %}
+{% load task_progress_class %}
+
 {% block css %}
 <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
 <link rel="stylesheet" href="{% static 'css/backend-plugin.min.css' %}">
@@ -216,10 +220,15 @@
                                 <div class="card-body">
                                     <h5 class="mb-3">{{ project.name }}</h5>
                                     <p class="mb-3"><i class="las la-calendar-check mr-2"></i>{{ project.due_date }}</p>
-                                    <div class="iq-progress-bar bg-secondary-light mb-4">
-                                                <span class="bg-secondary iq-progress progress-1" data-percent="65"
-                                                      style="transition: width 2s ease 0s; width: 65%;"></span>
+                                    
+                                    {% with project_progress=project|progress %}
+                                    {% with class_progress=project_progress|task_progress_class %}
+                                    <div class="iq-progress-bar bg-{{class_progress}}-light mb-3">
+                                        <span class="bg-{{class_progress}} iq-progress progress-1" data-percent="{{project_progress}}"></span>
                                     </div>
+                                    {% endwith %}
+                                    {% endwith %}
+
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="iq-media-group">
                                             <a href="#" class="iq-media">

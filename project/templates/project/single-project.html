@@ -55,6 +55,8 @@
                     
                 </div>
             </div>
+
+            {% if request.user.is_project_owner %}
             <div class="col-lg-12">
                 <div class="form-group mb-3">
                     <label for="id_image" class="h5">Featured Image</label>
@@ -72,10 +74,13 @@
                     <i class="fas fa-trash"></i>
                 </button>
             </div>
+            {% endif %}
+
         </div>
     </form>
 </div>
 
+{% if request.user.is_project_owner %}
 <div class="modal fade" id="confirm-delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -110,5 +115,6 @@
         });
     });
 </script>
+{% endif %}
 
 {% endblock content_of_project_layout %}

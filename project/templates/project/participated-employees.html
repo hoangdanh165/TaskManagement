@@ -28,13 +28,13 @@
                 <div class="card-body text-center p-0">
                     <div class="item">
                         <div class="odr-img">
-                            <img src="{% static 'images/user/user-2.jpg' %}" class="img-fluid rounded-circle avatar-90 m-auto"
+                            <img src="{% if employee.avatar %}{{ employee.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" class="img-fluid rounded-circle avatar-90 m-auto"
                                 alt="image">
                         </div>
                         <div class="odr-content rounded">
                             <h4 class="mb-2">{{employee.name}}</h4>
                             <p class="mb-3">{{employee.email}}</p>
-                            
+
                             <ul class="list-unstyled mb-3">
                                 <li class="bg-secondary-light rounded-circle iq-card-icon-small mr-4"><i
                                         class="ri-mail-open-line m-0"></i></li>

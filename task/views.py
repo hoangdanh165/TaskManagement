@@ -113,24 +113,28 @@ def update_task(request, id):
     messages.error(request, 'Failed to update this Task!')
     return redirect('tasks', task.belongs_to.id)
 
+@require_POST
 def turn_in_task(request):
     task_id = request.POST.get('task_id')
-    project_id = request.POST.get('project_id')
     
     task_obj = Task.objects.get(id=task_id)
     task_obj.completed = True
     task_obj.save()
     
+    project_id = task_obj.belongs_to.id 
+    
     url = reverse('your-tasks') + f'?project_id={project_id}'
     return redirect(url)
 
+@require_POST
 def undone_task(request):
     task_id = request.POST.get('task_id')
-    project_id = request.POST.get('project_id')
     
     task_obj = Task.objects.get(id=task_id)
     task_obj.completed = False
     task_obj.save()
+    
+    project_id = task_obj.belongs_to.id 
     
     url = reverse('your-tasks') + f'?project_id={project_id}'
     return redirect(url)
