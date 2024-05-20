@@ -1,5 +1,8 @@
 {% load static %}
 
+{% load task_progress_class %}
+{% load task_progress_of_user %}
+
 <div class="iq-sidebar  sidebar-default ">
     <div class="iq-sidebar-logo d-flex align-items-center">
         <a href="{% url 'dashboard' %}" class="header-logo">
@@ -95,19 +98,24 @@
                 <div class="card-body p-0">
                     <div class="sidebarbottom-content">
                         <h5 class="mb-3">Task Performed</h5>
+                        {% with user_progress=request.user|task_progress_of_user %}
+                        {% with progress_class=user_progress|task_progress_class %}
                         <div id="circle-progress-6"
-                            class="sidebar-circle circle-progress circle-progress-primary mb-4"
-                            data-min-value="0" data-max-value="100" data-value="55" data-type="percent"></div>
-                        <div class="custom-control custom-radio mb-1">
-                            <input type="radio" id="customRadio6" name="customRadio-1"
-                                class="custom-control-input" checked="">
-                            <label class="custom-control-label" for="customRadio6">Performed task</label>
+                            class="sidebar-circle circle-progress circle-progress-{{progress_class}} mb-4"
+                            data-min-value="0" data-max-value="100" data-value="{{user_progress}}" data-type="percent"></div>
+                        
+                        <div class="d-flex flex-column gap-2" style="padding: 0px 10px 15px 50px;">
+                            <div class="custom-control custom-radio custom-radio-color custom-control-inline">
+                                <input type="radio" id="customRadio01" name="customRadio-11" class="custom-control-input bg-{{progress_class}}">
+                                <label class="custom-control-label" for="customRadio01"> Performed Task </label>
+                             </div>
+                             <div class="custom-control custom-radio custom-radio-color custom-control-inline">
+                                <input type="radio" id="customRadio01" name="customRadio-11" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio01"> Incomplete Task </label>
+                             </div>
                         </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio7" name="customRadio-1"
-                                class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio7">Incomplete Task</label>
-                        </div>
+                        {% endwith %}
+                        {% endwith %}
                     </div>
                 </div>
             </div>
