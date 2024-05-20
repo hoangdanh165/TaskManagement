@@ -25,7 +25,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-center justify-content-between breadcrumb-content">
-                        <h5>Project <i class="las la-clipboard-list mr-3"></i><span class="h6">{{project_name}}</span></h5>
+                        <div class="d-flex">
+                            <h5>Project <i class="las la-clipboard-list mr-3"></i></h5>
+                            <span>{% if project_name %} {{project_name}} {% else %} Select a following project to view your tasks {% endif %}</span>
+                        </div>
                         
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <!-- <div class="dropdown status-dropdown mr-3">
