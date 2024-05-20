@@ -58,7 +58,15 @@
     border: 1px solid #ddd;
     margin: -1px 0 0 -1px;
     padding: 5px;
+
+    user-select: none;
+
 }
+
+.day.hovered {
+    background-color: black;
+}
+
 
 .days .day.red {
     background-color: red;
@@ -66,8 +74,37 @@
     font-weight: bold;
 }
 
-/* Đảm bảo ngày trống không hiển thị đường viền */
 .days div {
     border: none;
 }
 
+.project-details {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.project-details .details-content {
+    font-size: 20px;
+}
+
+#project-details {
+    text-align: center;
+}
+
+.card-title-ccc {
+    text-align: center; /* Căn giữa nội dung của thẻ <p> */
+    margin: 0; /* Loại bỏ margin mặc định để tránh khoảng trống xung quanh */
+}
+
+.card-title-cc {
+text-align: center; /* Căn giữa nội dung của thẻ <p> */
+    margin: 20px; /* Loại bỏ margin mặc định để tránh khoảng trống xung quanh */
+}
+
+.current-day {
+    background-color: pink;
+    color: black;
+    font-weight: bold;
+}

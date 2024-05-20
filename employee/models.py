@@ -29,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
     dob = models.DateField(null=False)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
     GENDER_CHOICES = (
         ('M', 'Male'),

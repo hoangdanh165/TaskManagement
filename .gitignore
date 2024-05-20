@@ -92,3 +92,5 @@ db.sqlite3
 
 /static/media/project-images/*
 !/static/media/project-images/default.jpg
+/static/media/avatars/*
+!/static/media/avatars/default.jpg

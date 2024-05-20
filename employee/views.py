@@ -8,15 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 import pytz
 
+
 # Authentication
 def registration(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST or None)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             new_user = form.save(commit=False)
             new_user.save()
-            messages.success(request, "SUCCESSFULLY SUBMITTED!")
-            return render(request, 'employee/login-page.html', {'new_username': new_user.name})
+            return render(request, 'employee/login-page.html')
         else:
             return render(request, 'employee/register-page.html', {'form': form})
     else:
@@ -27,7 +27,7 @@ def sign_in(request):
     if request.user.is_authenticated:
         user = request.user
         name = user.name
-        return render(request, 'employee/dashboard.html', {'name': name})
+        return redirect('dashboard')
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -37,7 +37,7 @@ def sign_in(request):
         if user is not None:
             login(request, user)
             name = user.name
-            return render(request, 'employee/dashboard.html', {'name': name})
+            return redirect('dashboard')
         else:
             error_message = "Invalid username or password."
             messages.error(request, error_message)

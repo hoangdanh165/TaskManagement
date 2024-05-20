@@ -36,7 +36,7 @@
             <div class="card-body">
                 <h2 class="title">Create Your Account</h2>
 
-                <form method="POST" action="{% url 'registration' %}">
+                <form method="POST" action="{% url 'registration' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row row-space">
                         <div class="col-2">
@@ -56,6 +56,17 @@
                                        value="{{ form.age.value|default_if_none:'' }}">
                                 {% if form.age.errors %}
                                 <p class="error">{{ form.age.errors }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <div class="crm-p-image bg-primary">
+                                    <label class="label">Avatar</label>
+                                    <input class="input--style-4" type="file" accept="image/*" name="avatar">
+                                </div>
+                                {% if form.avatar.errors %}
+                                <p class="error">{{ form.avatar.errors }}</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -171,14 +182,11 @@
     </div>
 </div>
 
-<!-- Jquery JS-->
+
 <script src="{%static 'employee/register-page/vendor/jquery/jquery.min.js' %}"></script>
-<!-- Vendor JS-->
 <script src="{%static 'employee/register-page/vendor/select2/select2.min.js' %}"></script>
 <script src="{%static 'employee/register-page/vendor/datepicker/moment.min.js' %}"></script>
-<script src="{%static 'employee/register-page/register-page/vendor/datepicker/daterangepicker.js' %}"></script>
-
-<!-- Main JS-->
+<script src="{%static 'employee/register-page/vendor/datepicker/daterangepicker.js' %}"></script>
 <script src="{%static 'employee/register-page/js/global.js' %}"></script>
 
 </body>
