@@ -225,7 +225,7 @@
                                     
                                     {% with project_progress=project|progress %}
                                     {% with class_progress=project_progress|task_progress_class %}
-                                    <div class="iq-progress-bar bg-{{class_progress}}-light">
+                                    <div class="iq-progress-bar bg-{{class_progress}}-light mb-3">
                                         <span class="bg-{{class_progress}} iq-progress progress-1" data-percent="{{project_progress}}"></span>
                                     </div>
                                     {% endwith %}
