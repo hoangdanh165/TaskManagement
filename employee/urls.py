@@ -10,4 +10,5 @@ urlpatterns = [
     path('view_user_profile', views.view_user_profile, name='view_user_profile'),
     path('edit_user_profile', views.edit_user_profile, name='edit_user_profile'),
     path('change_password', views.change_password, name='change_password'),
+    path('change_contact', views.change_contact, name='change_contact'),
 ]

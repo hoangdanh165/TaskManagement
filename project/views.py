@@ -60,6 +60,7 @@ def projects(request):
         'filter_by': filter_by,
         'search_query': search_query,
         'view_option': view_option,
+        'page_name': 'Project'
     }    
     return render(request, 'project/page-project.html', context)
 

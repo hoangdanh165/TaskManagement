@@ -99,7 +99,7 @@
 }
 
 .card-title-cc {
-text-align: center; /* Căn giữa nội dung của thẻ <p> */
+    text-align: center; /* Căn giữa nội dung của thẻ <p> */
     margin: 20px; /* Loại bỏ margin mặc định để tránh khoảng trống xung quanh */
 }
 
@@ -108,3 +108,5 @@ text-align: center; /* Căn giữa nội dung của thẻ <p> */
     color: black;
     font-weight: bold;
 }
+
+

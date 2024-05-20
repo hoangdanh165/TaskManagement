@@ -3,7 +3,7 @@ from json import dumps
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm, ProfileUpdateForm
+from .forms import RegistrationForm, ProfileUpdateForm, ContactUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 import pytz
@@ -55,19 +55,19 @@ def sign_out(request):
 @login_required
 def edit_user_profile(request):
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, instance=request.user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('view_user_profile')
+            return render(request, 'employee/edit-user-profile.html', {'page_name': 'Edit User Profile'})
         else:
-            return render(request, 'employee/edit-user-profile.html', {'form': form})
+            return render(request, 'employee/edit-user-profile.html', {'form': form, 'page_name': 'Edit User Profile'})
 
-    return redirect('view_user_profile')
+    return render(request, 'employee/edit-user-profile.html', {'page_name': 'Edit User Profile'})
 
 
 @login_required
 def view_user_profile(request):
-    return render(request, 'employee/edit-user-profile.html', {'user': request.user})
+    return render(request, 'employee/view-user-profile.html', {'page_name': 'User Profile'})
 
 
 @login_required
@@ -95,7 +95,6 @@ def change_password(request):
 @login_required()
 def dashboard(request):
     if request.user.is_authenticated:
-        title = "Dashboard"
         projects = request.user.participated_projects.all()
         nearest_due_timedelta = None
         nearest_due_project = None
@@ -118,9 +117,22 @@ def dashboard(request):
 
         data = dumps(project_due_dates)
         return render(request, 'employee/dashboard.html',
-                      {'name': request.user.name, 'title': title, 'projects': projects,
-                       'nearest_due_project': nearest_due_project, 'data': data})
+                      {'name': request.user.name, 'projects': projects,
+                       'nearest_due_project': nearest_due_project, 'data': data, 'page_name': 'Dashboard'})
 
 
 # @login_required()
 # def dashboard_calendar(request):
+
+@login_required()
+def change_contact(request):
+    page_name = 'Update Contact'
+    if request.method == 'POST':
+        form = ContactUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return render(request, 'employee/edit-user-profile.html', {'page_name': page_name})
+        else:
+            return render(request, 'employee/edit-user-profile.html', {'form': form, 'page_name': page_name})
+
+    return render(request, 'employee/edit-user-profile.html', {'page_name': page_name})

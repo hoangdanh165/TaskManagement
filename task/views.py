@@ -64,6 +64,7 @@ def your_task(request):
             'title': 'Tasks',
             'participated_projects': participated_projects,
             'actived_view': 'projects',
+            'page_name': 'Your Task',
         }
         
         return render(request, 'task/your-tasks.html', context)
@@ -90,6 +91,8 @@ def your_task(request):
         'project_id': project_id,
         
         'actived_view': 'tasks',
+
+
     }
     return render(request, 'task/your-tasks.html', context)
 

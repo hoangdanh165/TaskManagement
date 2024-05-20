@@ -47,7 +47,7 @@
                                             <div class="profile-img-edit">
                                                 <div class="crm-profile-img-edit">
                                                     <img class="crm-profile-pic rounded-circle avatar-100"
-                                                         src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" alt="profile-pic">
+                                                         src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" alt="profile-pic" id="profile-pic">
                                                     <div class="crm-p-image bg-primary">
                                                         <i class="las la-pen upload-button"></i>
                                                         <input class="file-upload" type="file" accept="image/*" name="avatar" onchange="previewImage()">
@@ -60,38 +60,32 @@
                                         <div class="form-group col-sm-6">
                                             <label for="name">Name:</label>
                                             <input type="text" class="form-control" id="name" name="name"
-                                                   value="{{ user.name }}">
+                                                   value="{{ user.name |default_if_none:'' }}">
                                             <p class="error">{{ form.name.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="age">Age:</label>
                                             <input type="number" class="form-control" id="age" name="age"
-                                                   value="{{ user.age }}">
+                                                   value="{{ user.age |default_if_none:'' }}">
                                             <p class="error">{{ form.age.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="username">User Name:</label>
                                             <input type="text" class="form-control" id="username" name="username"
-                                                   value="{{ user.username }}">
+                                                   value="{{ user.username |default_if_none:'' }}">
                                             <p class="error">{{ form.username.errors }}</p>
-                                        </div>
-                                        <div class="form-group col-sm-6">
-                                            <label for="phone">Phone:</label>
-                                            <input type="text" class="form-control" id="phone" name="phone"
-                                                   value="{{ user.phone }}">
-                                            <p class="error">{{ form.phone.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label class="d-block">Gender:</label>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio8" name="gender"
+                                                <input type="radio" id="customRadio8" value="M" name="gender"
                                                        class="custom-control-input"
                                                        {% if user.gender == "M" %}checked{% endif %}>
                                                 <label class="custom-control-label" for="customRadio8">
                                                     Male </label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio9" name="gender"
+                                                <input type="radio" id="customRadio9" value="F" name="gender"
                                                        class="custom-control-input"
                                                        {% if user.gender == "F" %}checked{% endif %}>
                                                 <label class="custom-control-label" for="customRadio9">
@@ -99,16 +93,27 @@
                                                 <p class="error">{{ form.gender.errors }}</p>
                                             </div>
                                         </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <label for="working_at">Working At:</label>
+                                            <input class="form-control" id="working_at" name="working_at" value="{{ user.working_at |default_if_none:'' }}">
+                                            <p class="error">{{ form.working_at.errors }}</p>
+                                        </div>
                                         <div class="form-group col-sm-6">
                                             <label for="dob">Date Of Birth:</label>
-                                            <input class="form-control" id="dob" name="dob" value="{{ user.dob }}">
+                                            <input class="form-control" id="dob" name="dob" value="{{ user.dob |default_if_none:'' }}">
                                             <p class="error">{{ form.dob.errors }}</p>
                                         </div>
                                         <div class="form-group col-sm-12">
                                             <label for="address">Address:</label>
                                             <input type="text" class="form-control" id="address" name="address"
-                                                   value="{{ user.address }}">
+                                                   value="{{ user.address |default_if_none:'' }}">
                                             <p class="error">{{ form.address.errors }}</p>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label for="job">Job:</label>
+                                            <input class="form-control" id="job" name="job" value="{{ user.job |default_if_none:'' }}">
+                                            <p class="error">{{ form.job.errors }}</p>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -165,17 +170,19 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="POST">
+                                <form action="{% url 'change_contact' %}" method="POST">
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="cno">Contact Number:</label>
-                                        <input type="text" class="form-control" id="phone"
-                                               value="">
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                               value="{{ request.user.phone }}">
+                                        <p class="error">{{ form.number.errors }}</p>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="text" class="form-control" id="email"
-                                               value="">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                               value="{{ request.user.email }}">
+                                        <p class="error">{{ form.email.errors }}</p>
                                     </div>
                                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                     <button type="reset" class="btn iq-bg-danger">Cancel</button>
@@ -192,21 +199,19 @@
 
 {% block script %}
 <script>
+
     function previewImage() {
-        var preview = document.getElementById('profile-pic');
-        var fileInput = document.getElementById('avatar-upload');
-        var file = fileInput.files[0];
-        console.log(file)
+        var file = document.querySelector('.file-upload').files[0];
         var reader = new FileReader();
 
         reader.onloadend = function () {
-            preview.src = reader.result;
-        };
+            document.querySelector('#profile-pic').src = reader.result;
+        }
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            preview.src = "";
+            document.querySelector('#profile-pic').src = "{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}";
         }
     }
 </script>

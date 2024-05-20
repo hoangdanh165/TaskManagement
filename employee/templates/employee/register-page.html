@@ -14,16 +14,19 @@
     <title>Join Our Team</title>
 
     <!-- Icons font CSS-->
-    <link href="{%static 'employee/register-page/vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet"
+    <link href="{%static 'employee/register-page/vendor/mdi-font/css/material-design-iconic-font.min.css' %}"
+          rel="stylesheet"
           media="all">
-    <link href="{%static 'employee/register-page/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+    <link href="{%static 'employee/register-page/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet"
+          media="all">
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
 
     <!-- Vendor CSS-->
     <link href="{%static 'employee/register-page/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
-    <link href="{%static 'employee/register-page/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+    <link href="{%static 'employee/register-page/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet"
+          media="all">
 
     <!-- Main CSS-->
     <link href="{%static 'employee/register-page/css/main.css' %}" rel="stylesheet" media="all">
@@ -70,6 +73,16 @@
                                 {% endif %}
                             </div>
                         </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Working At</label>
+                                <input class="input--style-4" type="text" name="working_at"
+                                       value="{{ form.working_at.value|default_if_none:'' }}">
+                                {% if form.working_at.errors %}
+                                <p class="error">{{ form.working_at.errors }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     <div class="row row-space">
                         <div class="col-2">
@@ -91,14 +104,14 @@
                                 <div class="p-t-10">
                                     <label class="radio-container m-r-45">Male
                                         <input type="radio" name="gender" value="M"
-                                            {% if form.gender.value == "M" %}
-                                            checked
-                                            {% endif %}>
+                                               {% if form.gender.value == "M" %}
+                                        checked
+                                        {% endif %}>
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="radio-container">Female
                                         <input type="radio" name="gender" value="F"
-                                           {% if form.gender.value == "F" %}checked{% endif %}>
+                                               {% if form.gender.value == "F" %}checked{% endif %}>
                                         <span class="checkmark"></span>
                                     </label>
                                     {% if form.gender.errors %}
@@ -130,14 +143,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <div class="input-group">
-                            <label class="label">Address</label>
-                            <input class="input--style-4" type="text" name="address"
-                                   value="{{ form.address.value|default_if_none:'' }}">
-                            {% if form.address.errors %}
-                            <p class="error">{{ form.address.errors }}</p>
-                            {% endif %}
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <label class="label">Address</label>
+                                    <input class="input--style-4" type="text" name="address"
+                                           value="{{ form.address.value|default_if_none:'' }}">
+                                    {% if form.address.errors %}
+                                    <p class="error">{{ form.address.errors }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Job</label>
+                                <input class="input--style-4" type="text" name="job"
+                                       value="{{ form.job.value|default_if_none:'' }}">
+                                {% if form.job.errors %}
+                                <p class="error">{{ form.job.errors }}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     <div class="input-group">
