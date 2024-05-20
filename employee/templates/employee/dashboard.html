@@ -170,7 +170,9 @@
         </div>
         <div class="col-xl-4">
             <!--Calendar-->
+
             <div class="card card-block card-stretch card-height">
+                <h4 class="card-title-cc">Project Calendar</h4>
                 <div class="calendar">
                     <div class="calendar-header">
                         <button class="prev-month-btn">&lt;</button>
@@ -191,7 +193,6 @@
                     </div>
                 </div>
                 <div class="project-details" style="display: none;">
-                <h3>Project Details</h3>
                 <div class="details-content"></div>
             </div>
             </div>
@@ -265,11 +266,12 @@
         const prevMonthBtn = document.querySelector(".calendar .prev-month-btn");
         const nextMonthBtn = document.querySelector(".calendar .next-month-btn");
         const projectDetails = document.querySelector(".project-details");
+        const noProject = document.querySelector(".no-project");
         const detailsContent = document.querySelector(".details-content");
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
         let currentYear = currentDate.getFullYear();
-
+        let todayDate = currentDate.getDate();
         renderCalendar(currentMonth, currentYear);
 
         prevMonthBtn.addEventListener("click", function() {
@@ -308,6 +310,12 @@
                 day.textContent = i;
                 calendarBody.appendChild(day);
 
+                const today = new Date(year, month, i);
+                const dateString1 = today.toISOString().split('T')[0];
+                if (i === todayDate) { // Kiểm tra nếu là ngày hiện tại
+                    day.classList.add("current-day"); // Thêm lớp cho ngày hiện tại
+                }
+
                 const currentDate = new Date(year, month, i);
                 const dateString = currentDate.toISOString().split('T')[0];
 
@@ -324,17 +332,44 @@
                     day.addEventListener("click", function() {
                     showProjectDetails(project);
                     });
+                } else {
+                // Thêm thông báo vào các ô ngày không có project
+                    day.addEventListener("click", function() {
+                    showNoProjectMessage();
+                });
                 }
             }
         }
+
         function showProjectDetails(project) {
             detailsContent.innerHTML = `
+                <h3 id="project-details">Project Details</h3>
+                <p><strong>Name:</strong> ${project.name}</p>
                 <p><strong>Due Date:</strong> ${project.due_date}</p>
-                <p><strong>Title:</strong> ${project.name}</p>
                 <p><strong>Description:</strong> ${project.description}</p>
             `;
             projectDetails.style.display = 'block';
         }
+        function showNoProjectMessage() {
+            detailsContent.innerHTML = ""; // Xóa nội dung cũ của phần chi tiết dự án
+            detailsContent.innerHTML = `
+                <p class="card-title-ccc"><strong></strong>No project up-to-date this day!</p>
+            `;
+            projectDetails.style.display = 'block';
+    }
+    });
+</script>
+<script>
+    const days = document.querySelectorAll('.day');
+
+    days.forEach(day => {
+        day.addEventListener('mouseenter', function() {
+            this.classList.add('hovered');
+        });
+
+        day.addEventListener('mouseleave', function() {
+            this.classList.remove('hovered');
+        });
     });
 </script>
 {% endblock script %}

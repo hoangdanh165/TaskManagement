@@ -40,17 +40,17 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{% url 'edit_user_profile' %}" method="POST">
+                                <form action="{% url 'edit_user_profile' %}" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <div class="form-group row align-items-center">
                                         <div class="col-md-12">
                                             <div class="profile-img-edit">
                                                 <div class="crm-profile-img-edit">
                                                     <img class="crm-profile-pic rounded-circle avatar-100"
-                                                         src="{%static 'images/user/11.png' %}" alt="profile-pic">
+                                                         src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" alt="profile-pic">
                                                     <div class="crm-p-image bg-primary">
                                                         <i class="las la-pen upload-button"></i>
-                                                        <input class="file-upload" type="file" accept="image/*">
+                                                        <input class="file-upload" type="file" accept="image/*" name="avatar" onchange="previewImage()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,7 +190,27 @@
 </div>
 {% endblock content %}
 
+{% block script %}
+<script>
+    function previewImage() {
+        var preview = document.getElementById('profile-pic');
+        var fileInput = document.getElementById('avatar-upload');
+        var file = fileInput.files[0];
+        console.log(file)
+        var reader = new FileReader();
 
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+{% endblock script %}
 <!-- Modal list start -->
 <div class="modal fade" role="dialog" aria-modal="true" id="new-project-modal">
     <div class="modal-dialog  modal-dialog-centered" role="document">
