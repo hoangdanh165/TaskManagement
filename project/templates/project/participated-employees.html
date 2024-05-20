@@ -31,7 +31,22 @@
                             <img src="{% if employee.avatar %}{{ employee.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" class="img-fluid rounded-circle avatar-90 m-auto"
                                 alt="image">
                         </div>
-                        <div class="odr-content rounded">
+
+                        <div class="odr-content rounded"
+                            {% if employee == project.owner or employee == request.user %}
+                                style="padding-top: 20px;"
+                            {% endif %}
+                            >
+                            {% if employee == project.owner %}
+                            <span class="badge badge-warning mb-3" >
+                                Owner
+                            </span>
+                            {% elif employee == request.user %}
+                            <span class="badge badge-secondary mb-3">
+                                You
+                            </span>
+                            {% endif %}
+
                             <h4 class="mb-2">{{employee.name}}</h4>
                             <p class="mb-3">{{employee.email}}</p>
 
@@ -49,6 +64,7 @@
                                 <a href="#" class="btn btn-danger px-4">Fire</a>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

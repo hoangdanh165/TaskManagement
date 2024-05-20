@@ -87,6 +87,7 @@ def createProject(request):
         project = form.save(commit=False)
         project.owner = request.user
         project.save()
+        project.participants.add(request.user)
         messages.success(request, 'Created project successfully!')
         return redirect('projects')
     

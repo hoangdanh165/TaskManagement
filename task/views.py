@@ -113,6 +113,11 @@ def create_task(request, project_id):
 @require_POST
 def update_task(request, id):
     task = Task.objects.get(id=id)
+    
+    if task.assigned_to != request.user:
+        messages.error(request, 'You do not have permission to update this Task!')
+        return redirect('tasks', task.belongs_to.id)
+    
     form = TaskForm(request.POST, instance=task)
     
     if form.is_valid():
