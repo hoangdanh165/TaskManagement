@@ -10,7 +10,8 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'password', 'dob', 'age', 'gender', 'address', 'phone', 'avatar']
+        fields = ['username', 'email', 'name', 'password', 'dob',
+                  'age', 'gender', 'address', 'phone', 'avatar', 'working_at', 'job']
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -38,5 +39,13 @@ class LoginForm(forms.ModelForm):
 class ProfileUpdateForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
-        fields = ['username', 'name', 'phone', 'dob', 'gender', 'age', 'address', 'avatar']
+        fields = ['username', 'name', 'phone', 'dob', 'gender', 'age', 'address', 'avatar', 'working_at', 'job']
 
+
+class ContactUpdateForm(forms.ModelForm):
+    email = forms.CharField(max_length=100)
+    phone = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['email', 'phone']
