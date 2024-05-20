@@ -1,8 +1,5 @@
-from django import forms
 from django.contrib.auth.forms import UserChangeForm
-
-from .models import User
-
+from django.contrib import messages
 from django import forms
 from .models import User
 
@@ -43,8 +40,3 @@ class ProfileUpdateForm(UserChangeForm):
         model = User
         fields = ['username', 'name', 'phone', 'dob', 'gender', 'age', 'address']
 
-
-class PasswordUpdateForm(UserChangeForm):
-    class Meta(UserChangeForm.Meta):
-        model = User
-        fields = ['username', 'password']
