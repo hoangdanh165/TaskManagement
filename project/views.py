@@ -115,3 +115,15 @@ def deleteProject(request, id):
     messages.success(request, 'Deleted project "%s" successfully!' % project_name)
     
     return redirect('projects')
+
+# Get participants in the project that has id
+def get_participants(request, id):
+    project = Project.objects.get(id=id)
+    
+    context = {
+        'title': 'Projects',
+        'project': project,
+        'actived_page': 'participated employees'
+    }
+    
+    return render(request, 'project/participated-employees.html', context)
