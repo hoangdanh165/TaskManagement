@@ -7,6 +7,7 @@ from .forms import ProjectForm
 from .models import Project
 
 from decorators.custom_decorator import identify_project_owner, required_project_owner
+from django.contrib.auth.decorators import login_required
 
 def store_form(request, form):
     request.session['form_data'] = form.data
@@ -31,7 +32,8 @@ def get_stored_form(request, form_class):
         return form
     
     return None
-    
+
+@login_required(login_url='/employee/sign_in')
 def projects(request):
     filter_by = request.GET.get('filter_by', 'all')
     if filter_by == 'participated':
@@ -64,6 +66,7 @@ def projects(request):
     }    
     return render(request, 'project/page-project.html', context)
 
+@login_required(login_url='/employee/sign_in')
 @identify_project_owner
 def project(request, id):
     project = Project.objects.get(id=id)
@@ -80,6 +83,7 @@ def project(request, id):
     return render(request, 'project/single-project.html', context)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 def createProject(request):
     form = ProjectForm(request.POST, request.FILES)
     
@@ -98,6 +102,7 @@ def createProject(request):
 
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 @identify_project_owner
 @required_project_owner
 def updateProject(request, id):
@@ -114,6 +119,7 @@ def updateProject(request, id):
     return redirect('project', id=id)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 @identify_project_owner
 @required_project_owner
 def deleteProject(request, id):
@@ -126,6 +132,7 @@ def deleteProject(request, id):
     return redirect('projects')
 
 # Get participants in the project that has id
+@login_required(login_url='/employee/sign_in')
 def get_participants(request, id):
     project = Project.objects.get(id=id)
     
