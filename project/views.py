@@ -6,6 +6,8 @@ from django.core.paginator import Paginator
 from .forms import ProjectForm
 from .models import Project
 
+from decorators.custom_decorator import identify_project_owner, required_project_owner
+
 def store_form(request, form):
     request.session['form_data'] = form.data
     request.session['form_errors'] = form.errors
@@ -61,7 +63,7 @@ def projects(request):
     }    
     return render(request, 'project/page-project.html', context)
 
-
+@identify_project_owner
 def project(request, id):
     project = Project.objects.get(id=id)
     form = get_stored_form(request, ProjectForm)
@@ -92,7 +94,10 @@ def createProject(request):
     store_form(request, form)
     return redirect('projects')
 
+
 @require_POST
+@identify_project_owner
+@required_project_owner
 def updateProject(request, id):
     project = Project.objects.get(id=id)
     form = ProjectForm(request.POST, request.FILES, instance=project)
@@ -107,6 +112,8 @@ def updateProject(request, id):
     return redirect('project', id=id)
 
 @require_POST
+@identify_project_owner
+@required_project_owner
 def deleteProject(request, id):
     project = Project.objects.get(id=id)
     project_name = project.name
