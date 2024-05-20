@@ -3,6 +3,7 @@ from django import template
 
 register = template.Library()
 
+# Compute the progress of a user on a project
 @register.filter
 def task_progress_percentage(project, user):
     tasks_of_user_on_project = Task.objects.filter(belongs_to=project, assigned_to=user)

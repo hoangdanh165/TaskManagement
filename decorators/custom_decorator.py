@@ -20,15 +20,3 @@ def required_project_owner(view_func):
         
         return view_func(request, *args, **kwargs)
     return _wrapped_view
-
-# def required_project_owner(view_func):
-#     @wraps(view_func)
-#     def _wrapped_view(request, *args, **kwargs):
-#         project = Project.objects.get(id=kwargs['id'])
-#         if request.user != project.owner:
-#             request.user._is_owner = False
-#             return HttpResponseForbidden()
-        
-#         request.user._is_owner = True
-#         return view_func(request, *args, **kwargs)
-#     return _wrapped_view
