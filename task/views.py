@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from decorators.custom_decorator import identify_participant_of_project
 from project.models import Project
 from task.forms import TaskForm
 from .models import Task
@@ -26,9 +27,18 @@ def filter_tasks_by_status(tasks, task_status='all'):
     
     return tasks
 
+@identify_participant_of_project
 def tasks(request, project_id):
     project = Project.objects.get(id=project_id)
     
+    if not request.user.is_participant:
+        context = { 
+            'project': project, 
+            'actived_page': 'tasks',
+        }
+        return render(request, 'task/task-denied-access.html', context)
+    
+    # User is participant of the project, so display the tasks
     task_range = request.GET.get('task_range', 'all')
     task_status = request.GET.get('task_status', 'all')
     

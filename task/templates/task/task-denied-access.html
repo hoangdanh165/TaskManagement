@@ -1,0 +1,14 @@
+{% extends 'project-layout.html' %}
+
+{% load static %}
+
+{% block content_of_project_layout %}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body p-5">
+           <div class="h4 mb-3" style="text-align: center;">Only participants can view the tasks of this project!</div>
+           <img src="{% static 'images/error/02.png'%}" class="img-fluid">
+        </div>
+    </div>
+</div>
+{% endblock content_of_project_layout %}
