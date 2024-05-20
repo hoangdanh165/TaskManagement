@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{% static 'vendor/tui-calendar/tui-calendar/dist/tui-calendar.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css' %}">
+<link rel="stylesheet" href="{% static 'employee/dashboard/style.css' %}">
 {% endblock css %}
 {% block content %}
 <div class="container-fluid">
@@ -135,14 +136,13 @@
                                                 <div class="col-md-3">
                                                     <div id="circle-progress-21"
                                                          class="circle-progress-01 circle-progress circle-progress-primary"
-                                                         data-min-value="0" data-max-value="100" data-value="25"
+                                                         data-min-value="0" data-max-value="100" data-value="90"
                                                          data-type="percent"></div>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="mt-3 mt-md-0">
-                                                        <h5 class="mb-1">Cloud Service Theme</h5>
-                                                        <p class="mb-0">Exclusively for cloud-based/ Startup
-                                                            theme.</p>
+                                                        <h5 class="mb-1">{{ nearest_due_project.name }}</h5>
+                                                        <p class="mb-0">{{ nearest_due_project.description}}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,17 +169,34 @@
             </div>
         </div>
         <div class="col-xl-4">
+            <!--Calendar-->
             <div class="card card-block card-stretch card-height">
-                <div class="card-body">
-                    <div class="card border-bottom pb-2 shadow-none">
-                        <div class="card-body text-center inln-date flet-datepickr">
-                            <input type="text" id="inline-date" class="date-input basicFlatpickr d-none"
-                                   readonly="readonly">
-                        </div>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button class="prev-month-btn">&lt;</button>
+                        <div class="month-year"></div>
+                        <button class="next-month-btn">&gt;</button>
                     </div>
-
+                    <div class="calendar-body">
+                        <div class="weekdays">
+                            <div class="weekday">Sun</div>
+                            <div class="weekday">Mon</div>
+                            <div class="weekday">Tue</div>
+                            <div class="weekday">Wed</div>
+                            <div class="weekday">Thu</div>
+                            <div class="weekday">Fri</div>
+                            <div class="weekday">Sat</div>
+                        </div>
+                        <div class="days"></div>
+                    </div>
                 </div>
+                <div class="project-details" style="display: none;">
+                <h3>Project Details</h3>
+                <div class="details-content"></div>
             </div>
+            </div>
+            <!-- Calendar end-->
+
         </div>
         <div class="col-lg-12">
             <div class="card-transparent mb-0">
@@ -238,7 +255,89 @@
     </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var projectDueDates = JSON.parse("{{data|escapejs}}");
+        console.log(projectDueDates)
+        const calendarBody = document.querySelector(".calendar .days");
+        const monthYearText = document.querySelector(".calendar .month-year");
+        const prevMonthBtn = document.querySelector(".calendar .prev-month-btn");
+        const nextMonthBtn = document.querySelector(".calendar .next-month-btn");
+        const projectDetails = document.querySelector(".project-details");
+        const detailsContent = document.querySelector(".details-content");
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
 
+        renderCalendar(currentMonth, currentYear);
+
+        prevMonthBtn.addEventListener("click", function() {
+            currentMonth -= 1;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear -= 1;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        nextMonthBtn.addEventListener("click", function() {
+            currentMonth += 1;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear += 1;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        function renderCalendar(month, year) {
+            let daysInMonth = new Date(year, month + 1, 0).getDate();
+            let firstDayOfMonth = new Date(year, month, 1).getDay();
+
+            calendarBody.innerHTML = "";
+            monthYearText.textContent = `${month + 1}/${year}`;
+
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                const emptyDay = document.createElement("div");
+                calendarBody.appendChild(emptyDay);
+            }
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement("div");
+                day.classList.add("day");
+                day.textContent = i;
+                calendarBody.appendChild(day);
+
+                const currentDate = new Date(year, month, i);
+                const dateString = currentDate.toISOString().split('T')[0];
+
+
+                let dueDate = new Date(dateString);
+
+                dueDate.setDate(dueDate.getDate() + 1);
+
+                const previousDateString = dueDate.toISOString().split('T')[0];
+
+                const project = projectDueDates.find(d => d.due_date === previousDateString);
+                if (project) {
+                    day.classList.add("red");
+                    day.addEventListener("click", function() {
+                    showProjectDetails(project);
+                    });
+                }
+            }
+        }
+        function showProjectDetails(project) {
+            detailsContent.innerHTML = `
+                <p><strong>Due Date:</strong> ${project.due_date}</p>
+                <p><strong>Title:</strong> ${project.name}</p>
+                <p><strong>Description:</strong> ${project.description}</p>
+            `;
+            projectDetails.style.display = 'block';
+        }
+    });
+</script>
+{% endblock script %}
 <!-- Modal list start -->
 <div class="modal fade" role="dialog" aria-modal="true" id="new-project-modal">
     <div class="modal-dialog  modal-dialog-centered" role="document">

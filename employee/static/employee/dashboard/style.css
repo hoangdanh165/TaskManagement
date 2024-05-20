@@ -1,0 +1,73 @@
+/* CSS cho toàn bộ lịch */
+.calendar {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.calendar-header .month-year {
+    font-weight: bold;
+}
+
+.calendar-body {
+    padding: 10px;
+}
+
+.weekdays, .days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.weekdays .weekday, .days .day {
+    width: 14.28%;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.weekdays {
+    border-bottom: 1px solid #ddd;
+}
+
+.weekdays .weekday {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.days .day {
+    border: 1px solid #ddd;
+    margin: -1px 0 0 -1px;
+    padding: 5px;
+}
+
+.days .day.red {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+/* Đảm bảo ngày trống không hiển thị đường viền */
+.days div {
+    border: none;
+}
+

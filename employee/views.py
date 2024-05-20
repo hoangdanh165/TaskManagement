@@ -1,10 +1,12 @@
+from datetime import datetime
+from json import dumps
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-
+import pytz
 
 # Authentication
 def registration(request):
@@ -92,10 +94,33 @@ def change_password(request):
 
 @login_required()
 def dashboard(request):
-    title = "Dashboard"
-    user = request.user
-    projects = user.participated_projects.all()
-    for p in projects:
-        print(p.name)
     if request.user.is_authenticated:
-        return render(request, 'employee/dashboard.html', {'name': request.user.name, 'title': title, 'projects': projects})
+        title = "Dashboard"
+        projects = request.user.participated_projects.all()
+        nearest_due_timedelta = None
+        nearest_due_project = None
+        project_due_dates = []
+        for project in projects:
+            due_date = str(project.due_date).split(' ')[0]
+            project_due_dates.append({
+                'due_date': due_date,
+                'name': project.name,
+                'description': project.description
+            })
+        for project in projects:
+            now_naive = datetime.now()
+            now_aware = pytz.timezone('UTC').localize(now_naive)
+            time_difference = now_aware - project.due_date
+
+            if nearest_due_timedelta is None or time_difference < nearest_due_timedelta:
+                nearest_due_timedelta = time_difference
+                nearest_due_project = project
+
+        data = dumps(project_due_dates)
+        return render(request, 'employee/dashboard.html',
+                      {'name': request.user.name, 'title': title, 'projects': projects,
+                       'nearest_due_project': nearest_due_project, 'data': data})
+
+
+# @login_required()
+# def dashboard_calendar(request):
