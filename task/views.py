@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from project.models import Project
 from task.forms import TaskForm
@@ -76,6 +77,7 @@ def your_task(request):
         'num_in_progress_tasks': num_in_progress_tasks,
         
         'project_name': project.name,
+        'project_id': project_id,
         
         'actived_view': 'tasks',
     }
@@ -108,3 +110,27 @@ def update_task(request, id):
     messages.error(request, 'Failed to update this Task!')
     return redirect('tasks', task.belongs_to.id)
 
+def turn_in_task(request):
+    task_id = request.POST.get('task_id')
+    project_id = request.POST.get('project_id')
+    
+    task_obj = Task.objects.get(id=task_id)
+    task_obj.completed = True
+    task_obj.save()
+    
+    url = reverse('your-tasks') + f'?project_id={project_id}'
+    return redirect(url)
+
+def undone_task(request):
+    task_id = request.POST.get('task_id')
+    project_id = request.POST.get('project_id')
+    
+    task_obj = Task.objects.get(id=task_id)
+    task_obj.completed = False
+    task_obj.save()
+    
+    url = reverse('your-tasks') + f'?project_id={project_id}'
+    return redirect(url)
+    
+    
+    
