@@ -5,7 +5,7 @@
 {% block content_of_project_layout %}
 
 <div class="card p-4">
-    <form class="" novalidate method="post" action="{% url 'update-project' project.id %}" enctype="multipart/form-data">
+    <form class="" novalidate method="post" action="{% url 'project:update-project' project.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.due_date }}
         <div class="row">
@@ -103,7 +103,7 @@
     </div>
 </div>
 
-<form id="delete-project-form" method="post" action="{% url 'delete-project' project.id %}">
+<form id="delete-project-form" method="post" action="{% url 'project:delete-project' project.id %}">
     {% csrf_token %}
 </form>
 

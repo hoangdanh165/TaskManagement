@@ -7,7 +7,7 @@ from .forms import RegistrationForm, ProfileUpdateForm, ContactUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 import pytz
-
+from invitation.models import Invitation
 
 # Authentication
 def registration(request):

@@ -15,7 +15,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="search-project-form" method="get" action="{% url 'projects' %}" class="hidden">
+                    <form id="search-project-form" method="get" action="{% url 'project:projects' %}" class="hidden">
                         <input type="hidden" name="view_option" value="{{view_option}}">
                     </form>
                     <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between breadcrumb-content">
@@ -115,7 +115,7 @@
                             {% endwith %}
                             <i class="ri-star-fill m-0 text-warning"></i>
                         </div>
-                        <a href="{% url 'project' project.id %}" style="text-decoration: none; color: #140F49;">
+                        <a href="{% url 'project:project' project.id %}" style="text-decoration: none; color: #140F49;">
                             <h5 class="mb-1">{{project.name}}</h5>
                             <p class="mb-3">{{project.description}}</p>
                         </a>
@@ -156,7 +156,7 @@
                                         data-type="percent"></div>
                                     {% endwith %}
 
-                                    <a href="{% url 'project' project.id %}" class="ml-3"
+                                    <a href="{% url 'project:project' project.id %}" class="ml-3"
                                         style="text-decoration: none; color: #140F49;">
                                         <h5 class="mb-1">{{project.name}}</h5>
                                         <p class="mb-0">{{project.description|truncatechars:50}}</p>

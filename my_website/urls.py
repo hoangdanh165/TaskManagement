@@ -8,9 +8,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('employee/', include('employee.urls')),
     path('employee/', include('django.contrib.auth.urls')),
-    path('', include('project.urls')),
+    path('', include('project.urls', namespace='project')),
     path('', include('task.urls')),
+    path('', include('invitation.urls', namespace='invitation')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

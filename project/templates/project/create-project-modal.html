@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <form id="form-create-project" class="" novalidate method="post" 
-                        action="{% url 'create-project' %}" enctype="multipart/form-data">
+                        action="{% url 'project:create-project' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.due_date }}
                     <div class="row">

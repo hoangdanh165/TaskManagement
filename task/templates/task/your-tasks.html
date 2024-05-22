@@ -205,7 +205,7 @@
                     {% for project in participated_projects %}
                     
                     <tr>
-                        <td><a href="{% url 'project' project.id %}" style="color: inherit;">{{project.name}}</a></td>
+                        <td><a href="{% url 'project:project' project.id %}" style="color: inherit;">{{project.name}}</a></td>
                         <td class="w-25">
                             {% with task_progress=project|task_progress_percentage:request.user %}
                             <div class="iq-progress-bar bg-{{task_progress|task_progress_class}}-light">

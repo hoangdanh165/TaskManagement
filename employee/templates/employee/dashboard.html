@@ -145,21 +145,19 @@
                                                 <div class="col-md-9">
                                                     <div class="mt-3 mt-md-0">
                                                         <h5 class="mb-1">{{ nearest_due_project.name }}</h5>
-                                                        <p class="mb-0">{{ nearest_due_project.description}}</p>
+                                                        <p class="mb-0">{{ nearest_due_project.description }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 text-sm-right mt-3 mt-sm-0">
                                             <div class="iq-media-group">
+                                                {% for participant in nearest_due_project.participants.all %}
                                                 <a href="#" class="iq-media">
                                                     <img class="img-fluid avatar-40 rounded-circle"
-                                                         src="{%static 'images/user/05.jpg' %}" alt="">
+                                                         src="{% if participant.avatar %}{{ participant.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" alt="">
                                                 </a>
-                                                <a href="#" class="iq-media">
-                                                    <img class="img-fluid avatar-40 rounded-circle"
-                                                         src="{%static 'images/user/06.jpg' %}" alt="">
-                                                </a>
+                                                {% endfor %}
                                             </div>
                                             <a class="btn btn-white text-primary link-shadow mt-2">High</a>
                                         </div>
