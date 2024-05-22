@@ -1,11 +1,14 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from decorators.custom_decorator import identify_participant_of_project
 from project.models import Project
 from task.forms import TaskForm
 from .models import Task
 
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+
 from django.contrib import messages
 
 def filter_task(request, tasks, task_range='all', task_status='all'):
@@ -26,9 +29,19 @@ def filter_tasks_by_status(tasks, task_status='all'):
     
     return tasks
 
+@login_required(login_url='/employee/sign_in')
+@identify_participant_of_project
 def tasks(request, project_id):
     project = Project.objects.get(id=project_id)
     
+    if not request.user.is_participant:
+        context = { 
+            'project': project, 
+            'actived_page': 'tasks',
+        }
+        return render(request, 'task/task-denied-access.html', context)
+    
+    # User is participant of the project, so display the tasks
     task_range = request.GET.get('task_range', 'all')
     task_status = request.GET.get('task_status', 'all')
     
@@ -43,6 +56,7 @@ def tasks(request, project_id):
     }
     return render(request, 'task/page-task.html', context)
 
+@login_required(login_url='/employee/sign_in')
 def your_task(request):
     project_id = request.GET.get('project_id')
     
@@ -87,6 +101,7 @@ def your_task(request):
     return render(request, 'task/your-tasks.html', context)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 def create_task(request, project_id):
     form = TaskForm(request.POST)
     
@@ -101,8 +116,14 @@ def create_task(request, project_id):
     return redirect('tasks', task.belongs_to.id)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 def update_task(request, id):
     task = Task.objects.get(id=id)
+    
+    if task.assigned_to != request.user:
+        messages.error(request, 'You do not have permission to update this Task!')
+        return redirect('tasks', task.belongs_to.id)
+    
     form = TaskForm(request.POST, instance=task)
     
     if form.is_valid():
@@ -114,6 +135,7 @@ def update_task(request, id):
     return redirect('tasks', task.belongs_to.id)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 def turn_in_task(request):
     task_id = request.POST.get('task_id')
     
@@ -127,6 +149,7 @@ def turn_in_task(request):
     return redirect(url)
 
 @require_POST
+@login_required(login_url='/employee/sign_in')
 def undone_task(request):
     task_id = request.POST.get('task_id')
     
