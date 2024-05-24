@@ -47,8 +47,11 @@
                                 </div>
                             </form>
                         </div>
+
+                        {% if request.user.is_project_owner %}
                         <a href="#" class="btn btn-primary" data-target="#new-task-modal" data-toggle="modal">New
                             Task</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

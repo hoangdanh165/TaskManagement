@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # Add this import
 from .models import Invitation
 from .forms import InvitationForm
 from project.models import Project
@@ -8,16 +9,17 @@ from django.utils import timezone
 
 @login_required
 def send_invitation(request):
-    project_name = request.POST['project_name']
-    project = Project.objects.get(name=project_name)
+    project_id = request.POST['project_id']
+    project = Project.objects.get(id=project_id)
+    
     if request.method == 'POST':
         form = InvitationForm(request.POST)
         if form.is_valid():
-            project_name = request.POST['project_name']
-            project = get_object_or_404(Project, name=project_name)
+            # project_name = request.POST['project_name']
+            # project = get_object_or_404(Project, name=project_name)
 
             invited_user_name = request.POST['invited_user']
-            invited_user = get_object_or_404(User, name=invited_user_name)
+            invited_user = get_object_or_404(User, username=invited_user_name)
 
             message = request.POST['message']
 
@@ -28,6 +30,8 @@ def send_invitation(request):
             invitation.invited_by = request.user
             invitation.timestamp = timezone.datetime.now()
             invitation.save()
+            
+            messages.success(request, 'Invitation sent successfully!')
             # Optionally, send notification to the invited user here
             return redirect('project:get-participants', id=project.id)
 

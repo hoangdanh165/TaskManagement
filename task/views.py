@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from decorators.custom_decorator import identify_participant_of_project
+from decorators.custom_decorator import identify_participant_of_project, identify_project_owner, required_project_owner
 from project.models import Project
 from task.forms import TaskForm
 from .models import Task
@@ -30,6 +30,7 @@ def filter_tasks_by_status(tasks, task_status='all'):
     return tasks
 
 @login_required(login_url='/employee/sign_in')
+@identify_project_owner
 @identify_participant_of_project
 def tasks(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -101,6 +102,8 @@ def your_task(request):
     return render(request, 'task/your-tasks.html', context)
 
 @require_POST
+@identify_project_owner
+@required_project_owner
 @login_required(login_url='/employee/sign_in')
 def create_task(request, project_id):
     form = TaskForm(request.POST)

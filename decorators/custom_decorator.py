@@ -8,7 +8,7 @@ from project.models import Project
 def identify_project_owner(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        project = Project.objects.get(id=kwargs['id'])
+        project = Project.objects.get(id=kwargs['project_id'])
         request.user.is_project_owner = (request.user == project.owner)
         
         return view_func(request, *args, **kwargs)

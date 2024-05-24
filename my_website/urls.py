@@ -4,8 +4,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from employee.views import dashboard as index
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    path('', index, name='index'),
+    
     path('employee/', include('employee.urls')),
     path('employee/', include('django.contrib.auth.urls')),
     path('', include('project.urls', namespace='project')),

@@ -9,5 +9,4 @@ urlpatterns = [
     path('turn-in-task', views.turn_in_task, name='turn-in-task'),
     path('undone-task', views.undone_task, name='undone-task'),
     
-    
 ]

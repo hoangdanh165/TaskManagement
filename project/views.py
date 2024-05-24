@@ -68,8 +68,8 @@ def projects(request):
 
 @login_required(login_url='/employee/sign_in')
 @identify_project_owner
-def project(request, id):
-    project = Project.objects.get(id=id)
+def project(request, project_id):
+    project = Project.objects.get(id=project_id)
     form = get_stored_form(request, ProjectForm)
     if form is None:
         form = ProjectForm(instance=project)
@@ -105,25 +105,25 @@ def createProject(request):
 @login_required(login_url='/employee/sign_in')
 @identify_project_owner
 @required_project_owner
-def updateProject(request, id):
-    project = Project.objects.get(id=id)
+def updateProject(request, project_id):
+    project = Project.objects.get(id=project_id)
     form = ProjectForm(request.POST, request.FILES, instance=project)
     
     if form.is_valid():
         form.save()
         messages.success(request, 'Updated project successfully!')
-        return redirect('project:project', id=id)
+        return redirect('project:project', project_id=project_id)
     
     messages.error(request, 'Failed to update this project!')
     store_form(request, form)
-    return redirect('project:project', id=id)
+    return redirect('project:project', project_id=project_id)
 
 @require_POST
 @login_required(login_url='/employee/sign_in')
 @identify_project_owner
 @required_project_owner
-def deleteProject(request, id):
-    project = Project.objects.get(id=id)
+def deleteProject(request, project_id):
+    project = Project.objects.get(id=project_id)
     project_name = project.name
     
     project.delete()
