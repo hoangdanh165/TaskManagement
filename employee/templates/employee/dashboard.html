@@ -229,22 +229,15 @@
 
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="iq-media-group">
+                                            {% with participants=project.participants.all %}
+                                            {% for p in participants %}
                                             <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/01.jpg' %}"
+                                                <img src="{% if p.avatar %}{{ p.avatar.url }}
+                                                                     {% else %}{% static 'media/avatars/default.jpg' %}{% endif %}"
                                                      class="img-fluid avatar-40 rounded-circle" alt="">
                                             </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/02.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/03.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
-                                            <a href="#" class="iq-media">
-                                                <img src="{% static 'images/user/04.jpg' %}"
-                                                     class="img-fluid avatar-40 rounded-circle" alt="">
-                                            </a>
+                                            {% endfor %}
+                                            {% endwith %}
                                         </div>
                                         <div>
                                             <a href="#" class="btn bg-secondary-light">Design</a>
