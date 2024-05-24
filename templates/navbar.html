@@ -323,7 +323,7 @@
                             <a href="#" class="search-toggle dropdown-toggle  d-flex align-items-center"
                                id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
-                                <img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/user-6.jpg' %}{% endif %}"
+                                <img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}"
                                      class="img-fluid rounded-circle"
                                      alt="user">
                                 <div class="caption ml-3">

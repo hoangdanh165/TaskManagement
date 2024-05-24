@@ -39,7 +39,7 @@ class LoginForm(forms.ModelForm):
 class ProfileUpdateForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
-        fields = ['username', 'name', 'phone', 'dob', 'gender', 'age', 'address', 'avatar', 'working_at', 'job']
+        fields = ['username', 'name', 'dob', 'gender', 'age', 'address', 'avatar', 'working_at', 'job']
 
 
 class ContactUpdateForm(forms.ModelForm):

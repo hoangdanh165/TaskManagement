@@ -58,7 +58,7 @@ def edit_user_profile(request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return render(request, 'employee/edit-user-profile.html', {'page_name': 'Edit User Profile'})
+            return redirect('edit_user_profile')
         else:
             return render(request, 'employee/edit-user-profile.html', {'form': form, 'page_name': 'Edit User Profile'})
 
