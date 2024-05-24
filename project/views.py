@@ -93,12 +93,12 @@ def createProject(request):
         project.save()
         project.participants.add(request.user)
         messages.success(request, 'Created project successfully!')
-        return redirect('projects')
+        return redirect('project:projects')
     
     messages.error(request, 'Failed to create new project!')
     
     store_form(request, form)
-    return redirect('projects')
+    return redirect('project:projects')
 
 
 @require_POST
@@ -112,11 +112,11 @@ def updateProject(request, id):
     if form.is_valid():
         form.save()
         messages.success(request, 'Updated project successfully!')
-        return redirect('project', id=id)
+        return redirect('project:project', id=id)
     
     messages.error(request, 'Failed to update this project!')
     store_form(request, form)
-    return redirect('project', id=id)
+    return redirect('project:project', id=id)
 
 @require_POST
 @login_required(login_url='/employee/sign_in')
@@ -129,7 +129,7 @@ def deleteProject(request, id):
     project.delete()
     messages.success(request, 'Deleted project "%s" successfully!' % project_name)
     
-    return redirect('projects')
+    return redirect('project:projects')
 
 # Get participants in the project that has id
 @login_required(login_url='/employee/sign_in')
