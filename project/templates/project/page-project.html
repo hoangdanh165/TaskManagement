@@ -165,14 +165,12 @@
                             </div>
                             <div class="col-sm-4 text-sm-right mt-3 mt-sm-0">
                                 <div class="iq-media-group">
+                                    {% for employee in project.participants.all %}
                                     <a href="#" class="iq-media">
                                         <img class="img-fluid avatar-40 rounded-circle"
-                                            src="{% static 'images/user/05.jpg' %}" alt="">
+                                            src="{% if employee.avatar %}{{ employee.avatar.url }}{% else %}{% static 'media/avatars/default.jpg' %}{% endif %}" alt="">
                                     </a>
-                                    <a href="#" class="iq-media">
-                                        <img class="img-fluid avatar-40 rounded-circle"
-                                            src="{% static 'images/user/06.jpg' %}" alt="">
-                                    </a>
+                                    {% endfor %}
                                 </div>
                                 <a class="btn btn-white text-primary link-shadow">High</a>
                             </div>
