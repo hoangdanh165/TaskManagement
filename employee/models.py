@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
-    dob = models.DateField(null=False)
+    dob = models.DateField()
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     working_at = models.CharField(max_length=100, blank=True, null=True)
     job = models.CharField(max_length=100, default='Software Engineer')

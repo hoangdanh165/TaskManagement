@@ -99,6 +99,7 @@ def dashboard(request):
         nearest_due_timedelta = None
         nearest_due_project = None
         project_due_dates = []
+
         for project in projects:
             due_date = str(project.due_date).split(' ')[0]
             project_due_dates.append({
