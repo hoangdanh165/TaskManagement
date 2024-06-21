@@ -31,7 +31,6 @@ importlib_metadata==7.1.0
 intel-openmp==2021.4.0
 ipython==8.24.0
 jedi==0.19.1
-joblib @ file:///C:/b/abs_4b02c83r3b/croot/joblib_1713976789617/work
 jsonpatch==1.33
 jsonpickle==3.0.3
 jsonpointer==2.4
@@ -47,8 +46,6 @@ marshmallow==3.21.1
 matplotlib==3.8.3
 matplotlib-inline==0.1.7
 mkl==2021.4.0
-mkl-fft @ file:///C:/b/abs_19i1y8ykas/croot/mkl_fft_1695058226480/work
-mkl-random @ file:///C:/b/abs_edwkj1_o69/croot/mkl_random_1695059866750/work
 mkl-service==2.4.0
 multidict==6.0.5
 mypy-extensions==1.0.0
@@ -56,7 +53,6 @@ mysql-connector-python==8.4.0
 mysqlclient==2.2.4
 networks==0.3.7
 networkx==3.2.1
-numpy @ file:///C:/b/abs_c1ywpu18ar/croot/numpy_and_numpy_base_1708638681471/work/dist/numpy-1.26.4-cp311-cp311-win_amd64.whl#sha256=5dfd3e04dc1c2826d3f404fdc7f93c097901f5da9b91f4f394f79d4e038ed81d
 opencv-python==4.9.0.80
 openpyxl==3.1.2
 orjson==3.10.0
@@ -83,7 +79,6 @@ pytz==2024.1
 PyYAML==6.0.1
 requests==2.31.0
 requests-html==0.10.0
-scikit-learn @ file:///C:/b/abs_d6_krvz8aa/croot/scikit-learn_1714164798159/work
 scipy==1.12.0
 seaborn==0.13.2
 selenium==4.18.1
@@ -99,7 +94,6 @@ svgwrite==1.4.3
 tbb==2021.12.0
 tenacity==8.2.3
 thop==0.1.1.post2209072238
-threadpoolctl @ file:///Users/ktietz/demo/mc3/conda-bld/threadpoolctl_1629802263681/work
 torch==2.3.0
 torchvision==0.18.0
 tqdm==4.66.2
